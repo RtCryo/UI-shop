@@ -1,0 +1,31 @@
+<div class = "container mt-1">
+    <div class = "row">
+        <div class = "col d-flex justify-content-end">
+            <img src="{{imgName}}" alt="" style="width: 26rem; height: 26rem;">
+        </div>
+        <div class = "col text-start">
+            <div class = "row">
+                <div class = "col" *ngIf = "product">
+                    <div class = "fs-2 fw-bold">{{product.productName}}</div>
+                    <div class = "fs-6 mb-2">{{product.category.categoryName}}</div>
+                    <div class = "fs-4">{{product.description}}</div>
+                </div>
+                <div class = "col" *ngIf = "product">
+                    <div class = "fs-2 fw-bold text-end" style="color: brown;">${{product.price}}</div>
+                    <div *ngIf="product.valueInStock> 0; then thenBlock else elseBlock"></div>
+                    <ng-template #thenBlock><p class="card-text text-end" style="color: rgb(94, 117, 180);">Store - {{product.valueInStock}}</p></ng-template>  
+                    <ng-template #elseBlock><p class="card-text text-end" style="color: rgb(179, 180, 94);">Can be order</p></ng-template>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class = "row">
+        <div class = "col d-flex justify-content-end">
+            <button class="btn btn btn-outline-secondary" style="color: black" (click)="onChanged(false)">&laquo;</button>
+            <input class = "text-center mx-1" type="text" (change) = "updateValue($event)" [(ngModel)] = "value" style="width: 2rem;">
+            <button class="btn btn btn-outline-secondary" style="color: black" (click)="onChanged(true)">&raquo;</button>
+            <button class="btn btn-info ms-2" style="width: 10rem;" type="submit" *ngIf = "disabled">Buy</button>
+            <button class="btn btn-info ms-2" style="width: 10rem;" type="submit" *ngIf = "!disabled">Order</button>
+        </div>
+    </div>
+</div>
