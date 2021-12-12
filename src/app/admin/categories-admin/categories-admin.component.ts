@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Category } from 'src/app/_model/category';
-import { CategoryService } from 'src/app/_service/category.service';
+import { CategoryAdminService } from 'src/app/_service/adminService/category-admin.service';
 
 @Component({
   selector: 'app-categories-admin',
@@ -8,19 +9,124 @@ import { CategoryService } from 'src/app/_service/category.service';
   styleUrls: ['./categories-admin.component.css']
 })
 export class CategoriesAdminComponent implements OnInit {
-
+  @ViewChild('closebutton') closebutton: any;
   categories!: Category[];
   checked = false;
+  categoryForm!: FormGroup;
+  isEdit: boolean = false;
+  categoryToEdit!: Category;
 
-  constructor(private categoryService: CategoryService) {
-    categoryService.getAllCategory().subscribe({
+  constructor(private categoryService: CategoryAdminService) {
+    this.getAllCategory();
+   }
+
+  ngOnInit(): void {
+  }
+
+  getAllCategory(){
+    this.categoryService.getAllCategory().subscribe({
       next: (response) => {
         this.categories = response;
       }
     })
-   }
+  }
 
-  ngOnInit(): void {
+  createNewForm(){
+    this.isEdit = false;
+    this.categoryForm = new FormGroup({
+      categoryName: new FormControl('', Validators.required),
+    })
+  }
+
+  submit(){
+    if(this.categoryForm.valid){
+      if(!this.isEdit) {
+        this.categoryService.saveCategory(this.categoryForm.value).subscribe({
+          next: () => {
+            this.getAllCategory();
+          },
+          complete: () => {
+            this.closebutton.nativeElement.click();
+          }
+        })
+      } else {
+        let category = new Category;
+        category.id = this.categoryToEdit.id;
+        category.categoryName = this.categoryForm.controls['categoryName'].value;
+        this.categoryService.updateCategory(category).subscribe({
+          next: () => {
+            this.getAllCategory();
+          },
+          complete: () => {
+            this.closebutton.nativeElement.click();
+          }
+        })
+      }
+    }
+  }
+
+  editCategory(category: Category){
+    this.isEdit = true;
+    this.categoryToEdit = category;
+    this.categoryForm = new FormGroup({
+      categoryName: new FormControl(category.categoryName, Validators.required),
+    });
+  }
+
+  checkAllOptions(){
+    let checkboxes: NodeListOf<HTMLInputElement> = document.querySelectorAll("#chkBox");
+    checkboxes.forEach((e) => {
+      if(!this.checked) { 
+        e.checked = true;
+      }
+      else {
+        e.checked = false;
+      }
+    })
+  }
+
+  resetCheckAll(){
+    let masterCheckBox = document.querySelector("#masterChkBox") as HTMLInputElement;
+    masterCheckBox.checked = false;
+    this.checked = false;
+  }
+
+  deleteProduct(category: Category){
+    this.categoryService.sendToDelete(category).subscribe({
+      next: () => {
+        
+      },
+      complete: () => {
+        this.getAllCategory();
+      }
+    })
+  }
+
+  deleteProducts(){
+    let checkboxes: NodeListOf<HTMLInputElement> = document.querySelectorAll("#chkBox");
+    let listToDelete: Category[] = [];
+    checkboxes.forEach((e) => {
+      if(e.checked) { 
+        let id: number = +e.value!;
+        this.categories.forEach((category) => {
+          if(category.id === id) {
+            listToDelete.push(category);
+            return;
+          }
+        })
+      }
+    })
+    if(listToDelete.length > 0) {
+      this.categoryService.sendListToDelete(listToDelete).subscribe({
+        next: () => {
+          this.getAllCategory();
+          this.resetCheckAll();
+        },
+        error: (msg) => {
+          alert(msg);
+        }
+      });
+    }
   }
 
 }

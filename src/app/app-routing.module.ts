@@ -7,13 +7,13 @@ import { SiteAdminComponent } from './admin/site-admin/site-admin.component';
 import { UsersAdminComponent } from './admin/users-admin/users-admin.component';
 import { CategoryComponent } from './category/category.component';
 import { HomeComponent } from './home/home.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 import { ProductComponent } from './product/product.component';
-import { DeleteGuard } from './_guards/delete.guard';
 
 const adminRoutes: Routes = [
   { path: 'users', component:  UsersAdminComponent},
   { path: 'products', component:  ProductsAdminComponent},
-  { path: 'productsToDelete', component:ProductsAdminComponent, canActivate: [DeleteGuard]},
+  { path: 'productsToDelete', component:ProductsAdminComponent},
   { path: 'categories', component:  CategoriesAdminComponent},
   { path: 'site', component:  SiteAdminComponent},
 ]
@@ -24,7 +24,8 @@ const routes: Routes = [
   { path: 'product/:id', component: ProductComponent},
   { path: 'category', component: CategoryComponent},
   { path: 'admin', component: AdminComponent, children: adminRoutes},
-  { path: '**', redirectTo: 'home' }
+  { path: '**', redirectTo: '404' },
+  { path: '404', component: NotFoundComponent},
 ];
 
 @NgModule({

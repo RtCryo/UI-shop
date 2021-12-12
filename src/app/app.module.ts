@@ -9,7 +9,7 @@ import { CategoryComponent } from './category/category.component';
 import { ProductComponent } from './product/product.component';
 import { FooterComponent } from './footer/footer.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AdminComponent } from './admin/admin.component';
 import { UsersAdminComponent } from './admin/users-admin/users-admin.component';
 import { ProductsAdminComponent } from './admin/products-admin/products-admin.component';
@@ -20,6 +20,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { ErrorInterceptor } from './_config/error.interceptor';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,8 @@ import { MatRadioModule } from '@angular/material/radio';
     UsersAdminComponent,
     ProductsAdminComponent,
     CategoriesAdminComponent,
-    SiteAdminComponent
+    SiteAdminComponent,
+    NotFoundComponent
   ],
   imports: [
     MatRadioModule,
@@ -47,7 +50,9 @@ import { MatRadioModule } from '@angular/material/radio';
     ReactiveFormsModule,
     BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

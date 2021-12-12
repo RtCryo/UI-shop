@@ -2,12 +2,12 @@
     <div class="container-fluid ms-4">
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto">
-          <li class="nav-item ms-4 mx-2">
-            <div class="navbar-text">{{email}}</div>
+          <li class="nav-item ms-4 mx-2" *ngIf = (siteSettingsService.siteSettings)>
+            <div class="navbar-text">{{siteSettingsService.siteSettings.email}}</div>
           </li>
           <div class="vr"></div>
-          <li class="nav-item mx-2">
-            <div class="navbar-text">{{adText}}</div>
+          <li class="nav-item mx-2" *ngIf = (siteSettingsService.siteSettings)>
+            <div class="navbar-text">{{siteSettingsService.siteSettings.deliveryInfo}}</div>
           </li>
         </ul>
         <ul class="navbar-nav me-4 fw-bold">
@@ -20,8 +20,8 @@
   </nav>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid nav-fill">
-        <ul class="nav-item navbar-brand my-auto">
-            <img src="/assets/img/logo.png" alt="" width="80" height="80">
+        <ul class="nav-item navbar-brand my-auto" *ngIf = (siteSettingsService.siteSettings)>
+            <img src="/assets/img/{{siteSettingsService.siteSettings.imgLogoName}}" alt="" width="80" height="80">
         </ul>
         <form class="nav-item d-flex justify-content-center my-auto">
             <input class="form-control" type="search" placeholder="Search" id="navBarSearchForm" aria-label="Search">

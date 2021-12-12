@@ -1,0 +1,15 @@
+button {
+    width: 12rem;
+}
+
+div.input-group{
+    width: 45rem;
+}
+
+table {
+    width: 45rem;
+}
+
+span.input-group-text {
+    width: 10rem;
+}

@@ -1,3 +1,45 @@
+<!-- Modal -->
+<div class="modal fade" data-bs-backdrop="static" id="categoryModal" tabindex="-1" aria-labelledby="categoryModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create new category:</h5>
+        <button type="button" #closebutton class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+          <div class="row">
+            <div class = "col" *ngIf = (categoryForm)>
+
+              <form [formGroup]="categoryForm" (ngSubmit)="submit()" novalidate>
+                
+                <div class="form-group input-group">
+                  <span class="input-group-text fw-bold" style="width: 10rem;">Category name</span>
+                  <input class="form-control" name="categoryName" formControlName="categoryName" />
+                </div>
+                <div class="text-danger text-center" *ngIf="categoryForm.controls['categoryName'].invalid && categoryForm.controls['categoryName'].touched">
+                  Name is required
+                </div>
+
+                <div class="modal-footer mt-3">
+                  <div class="form-group" align="end">
+                    <button class="btn btn-success mx-2" [disabled]="categoryForm.invalid" style="width: 6rem;">
+                      Save
+                    </button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="width: 6rem;">Close</button>
+                  </div>
+                </div>
+
+              </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class = "row">
     <table class="table table-sm table-striped table-bordered align-middle">
       <thead>
@@ -6,7 +48,7 @@
             <th scope="col">Category</th>
             <th scope="col">Management</th>
             <th scope="col">
-              <input class="form-check-input me-1" type="checkbox" value="" id="masterChkBox" [(ngModel)]="checked">
+              <input class="form-check-input me-1" type="checkbox" value="" id="masterChkBox" (click) = "checkAllOptions()" [(ngModel)]="checked">
             </th>
           </tr>
         </thead>
@@ -16,13 +58,13 @@
             <td>{{category.categoryName}}</td>
             <td class="">
               <div class="btn-group btn-group-sm ms-2">
-                <button class="btn btn-info" style="width: 4rem;" data-bs-toggle="modal" data-bs-target="#exampleModal">Edit</button>
-                <button class="btn btn-danger" style="width: 4rem;" >Delete</button>
+                <button class="btn btn-info" style="width: 4rem;" data-bs-toggle="modal" (click) = "editCategory(category)" data-bs-target="#categoryModal">Edit</button>
+                <button class="btn btn-danger" style="width: 4rem;" (click) = "deleteProduct(category)">Delete</button>
               </div>
             </td>
             <td>
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="{{category.id}}" id="chkBox">
+                <input class="form-check-input" type="checkbox" value="{{category.id}}" id="chkBox" (click) = "resetCheckAll()">
               </div>
             </td>
           </tr>
@@ -31,11 +73,11 @@
   </div>
   <div class = "row">
     <div class ="col d-flex justify-content-start">
-      <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      <button type="button" class="btn btn-primary btn-sm" (click) = "createNewForm()" data-bs-toggle="modal" data-bs-target="#categoryModal">
         Create new product
       </button>
     </div>
     <div class = "col d-flex justify-content-end">
-      <button type="button" class="btn btn-danger btn-sm">Delete all selected</button>
+      <button type="button" class="btn btn-danger btn-sm" (click) = "deleteProducts()">Delete all selected</button>
     </div>
   </div>

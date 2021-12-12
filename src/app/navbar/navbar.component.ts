@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Category } from '../_model/category';
 import { CategoryService } from '../_service/category.service';
 import { NavbarService } from '../_service/navbar.service';
+import { SiteSettingsService } from '../_service/site-settings.service';
 
 @Component({
   selector: 'app-navbar',
@@ -10,13 +11,12 @@ import { NavbarService } from '../_service/navbar.service';
 })
 export class NavbarComponent implements OnInit {
 
-  email: string = "email@web.de";
-  adText: string = "Free delivery – orders over $50";
   categories!: Category[];
   status: string = "Home";
+  siteSettingsService: SiteSettingsService;
 
-  constructor(private categoryService: CategoryService) {
-
+  constructor(private categoryService: CategoryService, siteSettingsService: SiteSettingsService) {
+    this.siteSettingsService = siteSettingsService;
   }
 
   ngOnInit(): void {

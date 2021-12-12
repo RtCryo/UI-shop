@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SiteSettingsService } from '../_service/site-settings.service';
 
 @Component({
   selector: 'app-footer',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FooterComponent implements OnInit {
 
-  constructor() { }
+  siteSettingsService: SiteSettingsService;
+
+  constructor(private settings: SiteSettingsService) {
+    this.siteSettingsService=settings;
+   }
 
   ngOnInit(): void {
   }
