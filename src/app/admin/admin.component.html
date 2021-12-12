@@ -1,0 +1,15 @@
+<div class="container-fluid mt-1">
+    <div class = "row">
+        <div class = "col-2">
+            <nav class="nav flex-column">
+                <a class="nav-link btn btn-outline-secondary text-start" style="color:black" routerLink="/admin/users">Users</a>
+                <a class="nav-link btn btn-outline-secondary text-start" style="color:black" routerLink="/admin/products">Products</a>
+                <a class="nav-link btn btn-outline-secondary text-start" style="color:black" routerLink="/admin/categories">Categories</a>
+                <a class="nav-link btn btn-outline-secondary text-start" style="color:black" routerLink="/admin/site">Site</a>
+              </nav>
+        </div>
+        <div class = "col">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

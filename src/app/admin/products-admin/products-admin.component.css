@@ -1,0 +1,19 @@
+input.ng-touched.ng-invalid {
+    border: solid red 2px;
+  }
+
+input.ng-touched.ng-valid {
+    border: solid green 2px;
+}
+
+textarea.ng-touched.ng-invalid {
+  border: solid red 2px;
+}
+
+textarea.ng-touched.ng-valid {
+  border: solid green 2px;
+}
+
+#radio {
+  padding: 0;
+}

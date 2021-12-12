@@ -1,0 +1,148 @@
+<!-- Modal -->
+<div class="modal fade" data-bs-backdrop="static" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create new product:</h5>
+        <button type="button" #closebutton class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class = "row">
+            <div class = "col d-flex justify-content-end mb-3" *ngIf = "(imgName)">
+              <img src="{{imgName}}" alt="" style="width: 6rem; height: 6rem;">
+          </div>
+          </div>
+          <div class="row">
+            <div class = "col" *ngIf = (productForm)>
+              <form [formGroup]="productForm" (ngSubmit)="submit()" novalidate>
+                
+                <div class="form-group input-group">
+                  <span class="input-group-text fw-bold" style="width: 10rem;">Product name</span>
+                  <input class="form-control" name="productName" formControlName="productName" />
+                </div>
+                <div class="text-danger text-center" *ngIf="productForm.controls['productName'].invalid && productForm.controls['productName'].touched">
+                  Name is required
+                </div>
+
+                <div class="form-group input-group mt-3">
+                  <span class="input-group-text fw-bold" style="width: 10rem;">Stock</span>
+                  <input class="form-control" name="valueInStock" formControlName="valueInStock" />
+                </div>
+                <div class="text-danger text-center" *ngIf="productForm.controls['valueInStock'].invalid && productForm.controls['valueInStock'].touched">
+                  Value is required
+                </div>
+
+                <div class="form-group input-group mt-3">
+                  <span class="input-group-text fw-bold" style="width: 10rem;">Description</span>
+                  <textarea class="form-control" name="description" formControlName="description"></textarea>
+                </div>
+                <div class="text-danger text-center" *ngIf="productForm.controls['description'].invalid && productForm.controls['description'].touched">
+                  Description is required
+                </div>
+
+                <div class="form-group input-group mt-3">
+                  <span class="input-group-text fw-bold" style="width: 10rem;">Price</span>
+                  <input class="form-control" name="price" formControlName="price" />
+                </div>
+                <div class="text-danger text-center" *ngIf="productForm.controls['price'].invalid && productForm.controls['price'].touched">
+                  Price is required
+                </div>
+
+                <div class="form-group form-check mt-3" *ngIf = "(categories)">
+                  <label class = "fw-bold mb-1">Category:</label>
+                  <div class="form-check" *ngFor = "let category of categories">
+                    <input class="form-control form-check-input" id = "radio" value = "{{category.id}}" formControlName="category" name = "category" type="radio">
+                    <label class="form-check-label mx-1">
+                      {{category.categoryName}}
+                    </label>
+                  </div>
+                </div>
+                <div class="text-danger text-center" *ngIf="productForm.controls['category'].invalid && productForm.controls['category'].touched">
+                  Category is required
+                </div>
+
+                <div *ngIf="currentFile" class="progress my-1">
+                  <div
+                    class="progress-bar progress-bar-info progress-bar-striped"
+                    role="progressbar"
+                    attr.aria-valuenow="{{ progress }}"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                    [ngStyle]="{ width: progress + '%' }"
+                  >
+                    {{ progress }}%
+                  </div>
+                </div>
+
+                <div class="form-group input-group mt-3">
+                  <span class="input-group-text fw-bold">Image</span>
+                  <input type="file" class="form-control" name="imageFile" formControlName="imageFile" (change)="selectFile($event)"/>
+                </div>
+
+                <div class="modal-footer mt-3">
+                <div class="form-group" align="end">
+                  <button class="btn btn-success mx-2" [disabled]="productForm.invalid && !loading" style="width: 6rem;">
+                    Save
+                  </button>
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="width: 6rem;">Close</button>
+                </div>
+              </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class = "row">
+  <table class="table table-sm table-striped table-bordered align-middle">
+    <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Product</th>
+          <th scope="col">Stock</th>
+          <th scope="col">Category</th>
+          <th scope="col">Preis</th>
+          <th scope="col">Management</th>
+          <th scope="col">
+            <input class="form-check-input me-1" type="checkbox" value="" id="masterChkBox" (click) = "checkAllOptions()" [(ngModel)]="checked">
+          </th>
+        </tr>
+      </thead>
+      <tbody *ngIf = (products)>
+        <tr *ngFor = "let product of products; let t = index">
+          <th scope="row">{{t + 1}}</th>
+          <td>{{product.productName}}</td>
+          <td>{{product.valueInStock}}</td>
+          <td>{{product.category.categoryName}}</td>
+          <td>{{product.price}}</td>
+          <td class="">
+            <div class="btn-group btn-group-sm ms-2">
+              <button class="btn btn-info" style="width: 4rem;" (click) = "editProduct(product)" data-bs-toggle="modal" data-bs-target="#exampleModal">Edit</button>
+              <button class="btn btn-danger" style="width: 4rem;" (click) = "deleteProduct(product)">Delete</button>
+            </div>
+          </td>
+          <td>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="{{product.id}}" id="chkBox" (click) = "resetCheckAll()">
+            </div>
+          </td>
+        </tr>
+      </tbody>
+  </table>
+</div>
+<div class = "row">
+  <div class ="col d-flex justify-content-start">
+    <button type="button" class="btn btn-primary btn-sm" (click)="createNewForm()" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      Create new product
+    </button>
+  </div>
+  <div class = "col d-flex justify-content-end">
+    <button type="button" class="btn btn-danger btn-sm" (click)="deleteProducts()">Delete all selected</button>
+  </div>
+</div>

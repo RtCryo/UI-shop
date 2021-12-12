@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Category } from '../_model/category';
+import { CategoryService } from '../_service/category.service';
 import { NavbarService } from '../_service/navbar.service';
 
 @Component({
@@ -14,12 +15,12 @@ export class NavbarComponent implements OnInit {
   categories!: Category[];
   status: string = "Home";
 
-  constructor(private navbarService: NavbarService) {
+  constructor(private categoryService: CategoryService) {
 
   }
 
   ngOnInit(): void {
-    this.navbarService.getCategory().subscribe({
+    this.categoryService.getAllCategory().subscribe({
       next: (category) => {
         this.categories = category;
       }

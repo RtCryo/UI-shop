@@ -10,6 +10,16 @@ import { ProductComponent } from './product/product.component';
 import { FooterComponent } from './footer/footer.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { AdminComponent } from './admin/admin.component';
+import { UsersAdminComponent } from './admin/users-admin/users-admin.component';
+import { ProductsAdminComponent } from './admin/products-admin/products-admin.component';
+import { CategoriesAdminComponent } from './admin/categories-admin/categories-admin.component';
+import { SiteAdminComponent } from './admin/site-admin/site-admin.component';
+import { MatSelectModule } from '@angular/material/select';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
 
 @NgModule({
   declarations: [
@@ -18,14 +28,24 @@ import { HttpClientModule } from '@angular/common/http';
     NavbarComponent,
     CategoryComponent,
     ProductComponent,
-    FooterComponent
+    FooterComponent,
+    AdminComponent,
+    UsersAdminComponent,
+    ProductsAdminComponent,
+    CategoriesAdminComponent,
+    SiteAdminComponent
   ],
   imports: [
+    MatRadioModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatSelectModule,
     BrowserModule,
     AppRoutingModule,    
     FormsModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

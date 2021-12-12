@@ -44,10 +44,10 @@
     <div class="container-fluid nav-fill">
         <ul class="navbar-nav nav-item mb-lg-0 justify-content-center">
             <li class="nav-item">
-              <a class="nav-link" (click)="selectMenu('Home')" [ngClass]="status === 'Home' ? 'text-white' : 'text-black'" routerLink="/home">Home</a>
+              <a class="nav-link fw-bold" (click)="selectMenu('Home')" [ngClass]="status === 'Home' ? 'text-white' : 'text-black'" routerLink="/home">Home</a>
             </li>
             <li class="nav-item" *ngFor = "let category of categories">
-              <a class="nav-link" (click)="selectMenu(category.categoryName)" [ngClass]="status === category.categoryName ? 'text-white' : 'text-black'" routerLink="/category" [queryParams] = "{name: category.categoryName}">{{category.categoryName}}</a>
+              <a class="nav-link fw-bold" (click)="selectMenu(category.categoryName)" [ngClass]="status === category.categoryName ? 'text-white' : 'text-black'" routerLink="/category" [queryParams] = "{name: category.categoryName}">{{category.categoryName}}</a>
             </li>
         </ul>
     </div>

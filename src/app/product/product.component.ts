@@ -15,7 +15,6 @@ export class ProductComponent implements OnInit {
   public disabled: boolean = true;
   public imgName: string = "";
   private subscription: Subscription;
-  private input = document.querySelector("#value");
 
   constructor(private activateRoute: ActivatedRoute, private productService: ProductService) {
     this.subscription = activateRoute.params.subscribe(
@@ -38,8 +37,8 @@ export class ProductComponent implements OnInit {
     this.productService.getProduct(id).subscribe({
       next: (response) => {
         this.product = response;
-        this.disabled = this.product.valueInStock < 0
-        this.imgName = "/assets/img_product/" + this.product.imgName + ".jpg";
+        this.disabled = this.product.valueInStock > 0;
+        this.imgName = "/assets/img_product/" + this.product.imgName;
       }
     })
   }
