@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/internal/Observable';
 import { environment } from 'src/environments/environment';
-import { SiteSettings } from '../_model/site-settings';
+import { SiteSettings } from '../../_model/site-settings';
 
 @Injectable({
   providedIn: 'root'
@@ -22,11 +23,7 @@ export class SiteSettingsService {
     });
    }
 
-   public updateSiteSettings(siteSettings: SiteSettings){
-    this.http.get<SiteSettings>(`${environment.hostUrl}/admin/updateSettings`, {withCredentials: true}).subscribe({
-      next: (response) => {
-        this.siteSettings = response;
-      }
-    });
-   }
+   updateSiteSettings(){
+    return this.http.post<SiteSettings>(`${environment.hostUrl}/admin/updateSettings`, this.siteSettings, {withCredentials: true});
+  }
 }

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Category } from '../_model/category';
 import { CategoryService } from '../_service/category.service';
 import { NavbarService } from '../_service/navbar.service';
-import { SiteSettingsService } from '../_service/site-settings.service';
+import { SiteSettingsService } from '../_service/adminService/site-settings.service';
 
 @Component({
   selector: 'app-navbar',

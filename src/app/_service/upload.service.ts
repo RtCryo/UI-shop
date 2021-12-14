@@ -23,4 +23,17 @@ export class UploadService {
     return this.http.request(req);
  }
 
+ uploadSiteFile(file: File): Observable<HttpEvent<any>> {
+  const formData: FormData = new FormData();
+
+  formData.append('file', file);
+
+  const req = new HttpRequest('POST', `${environment.hostUrl}/admin/imgSiteToSave`, formData, {
+    reportProgress: true,
+    responseType: 'json'
+  });
+
+  return this.http.request(req);
+}
+
 }

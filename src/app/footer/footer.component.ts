@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SiteSettingsService } from '../_service/site-settings.service';
+import { SiteSettingsService } from '../_service/adminService/site-settings.service';
 
 @Component({
   selector: 'app-footer',

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from '../_model/product';
 import { HomeService } from '../_service/home.service';
-import { SiteSettingsService } from '../_service/site-settings.service';
+import { SiteSettingsService } from '../_service/adminService/site-settings.service';
 
 @Component({
   selector: 'app-home',
