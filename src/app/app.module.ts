@@ -51,7 +51,7 @@ import { ErrorInterceptor } from './_config/error.interceptor';
     BrowserAnimationsModule
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    /* { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }, */
   ],
   bootstrap: [AppComponent]
 })

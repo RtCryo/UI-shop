@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SiteSettings } from '../_model/site-settings';
 import { SiteSettingsService } from '../_service/adminService/site-settings.service';
 
 @Component({
@@ -8,13 +9,13 @@ import { SiteSettingsService } from '../_service/adminService/site-settings.serv
 })
 export class FooterComponent implements OnInit {
 
-  siteSettingsService: SiteSettingsService;
+  siteSettings!: SiteSettings;
 
-  constructor(private settings: SiteSettingsService) {
-    this.siteSettingsService=settings;
-   }
+  constructor(private readonly siteSettingService: SiteSettingsService) {
+  }
 
   ngOnInit(): void {
+    this.siteSettingService.siteSettings$.subscribe((settings) => this.siteSettings = settings);
   }
 
 }

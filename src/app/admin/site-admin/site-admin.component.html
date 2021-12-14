@@ -1,54 +1,58 @@
-
-    <div class = "row" *ngIf = "(siteSettingsService.siteSettings)">
+<form [formGroup]="settingForm" novalidate (ngSubmit)="submit()" *ngIf = "(siteSettings)">
+    <div class = "row">
         <div class = "col mx-3">
 
-            <div class=" input-group my-2">
+            <div class="form-group input-group my-2">
                 <span class="input-group-text">Shop name</span>
-                <input type="text" class="form-control" placeholder="{{siteSettingsService.siteSettings.siteName}}" aria-label="Site name" aria-describedby="buttonSiteName">
-                <button class="btn btn-outline-secondary" type="button" id="buttonSiteName" (click) = "submit()">Change</button>
+                <input type="text" class="form-control" formControlName="siteName" placeholder="{{siteSettings.siteName}}" id="siteName" aria-label="Site name" aria-describedby="buttonSiteName">
             </div>
 
-            <div class=" input-group my-2">
+            <div class="form-group input-group my-2">
                 <span class="input-group-text">E-mail</span>
-                <input type="text" class="form-control" placeholder="{{siteSettingsService.siteSettings.email}}" aria-label="email" aria-describedby="buttonEmail">
-                <button class="btn btn-outline-secondary" type="button" id="buttonEmail">Change</button>
+                <input type="text" class="form-control" formControlName="email" placeholder="{{siteSettings.email}}" aria-label="email" aria-describedby="buttonEmail">
             </div>
 
-            <div class="input-group my-2">
+            <div class="form-group input-group my-2">
                 <span class="input-group-text">Delivery info</span>
-                <input type="text" class="form-control" placeholder="{{siteSettingsService.siteSettings.deliveryInfo}}" aria-label="deliveryInfo" aria-describedby="buttonDelivery">
-                <button class="btn btn-outline-secondary" type="button" id="buttonDelivery">Change</button>
+                <input type="text" class="form-control" formControlName="deliveryInfo" placeholder="{{siteSettings.deliveryInfo}}" aria-label="deliveryInfo" aria-describedby="buttonDelivery">
             </div>
 
-            <div class="input-group my-2">
+            <div class="form-group input-group my-2">
                 <span class="input-group-text">Info 1</span>
-                <input type="text" class="form-control" placeholder="{{siteSettingsService.siteSettings.info1}}" aria-label="Info1" aria-describedby="buttonInfo1">
-                <button class="btn btn-outline-secondary" type="button" id="buttonInfo1">Change</button>
+                <input type="text" class="form-control" formControlName="info1" placeholder="{{siteSettings.info1}}" aria-label="Info1" aria-describedby="buttonInfo1">
             </div>
-            <div class="input-group my-2">
+            <div class="form-group input-group my-2">
                 <span class="input-group-text">Info 2</span>
-                <input type="text" class="form-control" placeholder="{{siteSettingsService.siteSettings.info2}}" aria-label="Info2" aria-describedby="buttonInfo2">
-                <button class="btn btn-outline-secondary" type="button" id="buttonInfo2">Change</button>
+                <input type="text" class="form-control" formControlName="info2" placeholder="{{siteSettings.info2}}" aria-label="Info2" aria-describedby="buttonInfo2">
             </div>
-            <div class="input-group my-2">
+            <div class="form-group input-group my-2">
                 <span class="input-group-text">Info 3</span>
-                <input type="text" class="form-control" placeholder="{{siteSettingsService.siteSettings.info3}}" aria-label="Info3" aria-describedby="buttonInfo3">
-                <button class="btn btn-outline-secondary" type="button" id="buttonInfo3">Change</button>
+                <input type="text" class="form-control" formControlName="info3" placeholder="{{siteSettings.info3}}" aria-label="Info3" aria-describedby="buttonInfo3">
             </div>
 
-            <div class="input-group">
-                <input type="file" class="form-control" id="inputGroupFile04" aria-describedby="uploadLogo" aria-label="Upload">
-                <button class="btn btn-outline-secondary" type="button" id="uploadLogo">Upload new logo</button>
-            </div>
-
-            <div class="input-group my-2">
-                <input type="file" class="form-control" id="inputGroupFile04" (change)="selectFile($event)" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
-                <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04" (click) = "uploadNewIng()">Upload new banner</button>
+            <div class="form-group">
+                <button class="btn btn-success" [disabled]="settingForm.invalid" style="width: 6rem;">
+                    Save
+                </button>
             </div>
         </div>
     </div>
+</form>
 
-<table class="table table-sm table-striped table-bordered align-middle m-3">
+<div class = "mx-3 mt-3">
+    <div class="input-group mb-1">
+        <span class="input-group-text">Upload logo</span>
+        <input type="file" class="form-control" id="inputGroupFile04" aria-describedby="uploadLogo" aria-label="Upload">
+        <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04" (click) = "uploadNewLogo()">Upload</button>
+    </div>
+
+    <div class="input-group mb-1">
+        <span class="input-group-text">Upload banner</span>
+        <input type="file" class="form-control" id="inputGroupFile04" (change)="selectFile($event)" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+        <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04" (click) = "uploadNewIng()">Upload</button>
+    </div>
+</div>
+<table class="table table-sm table-striped table-bordered align-middle mx-3">
     <thead>
         <tr>
             <th scope="col">#</th>
@@ -59,8 +63,8 @@
             </th>
     </tr>
     </thead>
-    <tbody *ngIf = (siteSettingsService.siteSettings)>
-        <tr *ngFor = "let pic of siteSettingsService.siteSettings.banner; let t = index">
+    <tbody *ngIf = (siteSettings)>
+        <tr *ngFor = "let pic of siteSettings.banner; let t = index">
         <th scope="row">{{t + 1}}</th>
         <td>{{pic}}</td>
         <td class="">

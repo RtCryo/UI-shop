@@ -1,5 +1,7 @@
 import { HttpEventType, HttpResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { SiteSettings } from 'src/app/_model/site-settings';
 import { SiteSettingsService } from 'src/app/_service/adminService/site-settings.service';
 import { UploadService } from 'src/app/_service/upload.service';
 
@@ -10,18 +12,61 @@ import { UploadService } from 'src/app/_service/upload.service';
 })
 export class SiteAdminComponent implements OnInit {
 
-  siteSettingsService: SiteSettingsService;
+  siteSettings!: SiteSettings;
   checked = false;
   selectedFile!: any;
+  selectedLogo!: any;
   progress = 0;
   message: string = "";
   loading: boolean = false;
+  settingForm!: FormGroup;
 
-  constructor(private siteService: SiteSettingsService, private uploadService: UploadService) { 
-    this.siteSettingsService = siteService;
+  constructor(private uploadService: UploadService, private formBuilder: FormBuilder, private readonly siteSettingService: SiteSettingsService) { 
   }
 
   ngOnInit(): void {
+    this.siteSettingService.siteSettings$.subscribe((settings) => {
+      this.siteSettings = settings;
+      this.createNewForm();  
+    });
+  }
+
+  createNewForm(){
+    this.settingForm = this.formBuilder.group({
+          siteName: [this.siteSettings.siteName, Validators.required],
+          email: [this.siteSettings.email, Validators.required],
+          deliveryInfo: [this.siteSettings.deliveryInfo, Validators.required],
+          info1: [this.siteSettings.info1, Validators.required],
+          info2: [this.siteSettings.info2, Validators.required],
+          info3: [this.siteSettings.info3, Validators.required],
+          imgLogoName: [this.siteSettings.imgLogoName],
+          banner: [this.siteSettings.banner],
+          id: [this.siteSettings.id]
+      })
+    }
+
+  uploadNewLogo(){
+    if( this.selectedLogo) { 
+      let currentFile = this.selectedFile.item(0)!;
+      this.uploadService.uploadSiteFile(currentFile).subscribe({
+        next: (event) => {
+          if (event.type === HttpEventType.UploadProgress) {
+            if(event.total) {
+              this.progress = Math.round(100 * event.loaded / event.total);
+            }
+          } else if (event instanceof HttpResponse) {
+            this.submit();
+          }
+        },
+        error: () => {
+          this.progress = 0;
+          this.message = 'Could not upload the file!';
+          this.loading = false;
+        },
+        complete: () => {
+        }
+      });
+  }
   }
 
   uploadNewIng(){
@@ -34,8 +79,8 @@ export class SiteAdminComponent implements OnInit {
               this.progress = Math.round(100 * event.loaded / event.total);
             }
           } else if (event instanceof HttpResponse) {
-            let t:string = event.body.message;
-            this.siteSettingsService.siteSettings.banner.push(t);
+            this.siteSettings.banner.push(event.body.message);
+            this.siteSettingService.siteSettings$.next(this.siteSettings);
             this.submit();
           }
         },
@@ -54,17 +99,14 @@ export class SiteAdminComponent implements OnInit {
     this.selectedFile = event.target.files;
   }
 
+  selectLogo(event: any){
+    this.selectedLogo = event.target.files;
+  }
+
   deleteBanner(pic: string){}
 
   submit(){
-    this.siteSettingsService.updateSiteSettings().subscribe({
-      next: () => {
-
-      },
-      error: (err) => {
-        console.log(err);
-      }
-    })
+    this.siteSettingService.updateSiteSettings(this.settingForm.value);
   }
 
   checkAllOptions() {

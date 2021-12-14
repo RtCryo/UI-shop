@@ -1,7 +1,7 @@
 
   <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-inner mt-1" *ngIf = (siteSettingsService.siteSettings)>
-      <div class="carousel-item" *ngFor = "let pic of siteSettingsService.siteSettings.banner; let isFirst = first" [ngClass]="{active:isFirst}">
+    <div class="carousel-inner mt-1" *ngIf = (siteSettings)>
+      <div class="carousel-item" *ngFor = "let pic of siteSettings.banner; let isFirst = first" [ngClass]="{active:isFirst}">
         <img src="/assets/img/{{pic}}" class="d-block w-100" alt="">
       </div>
     </div>

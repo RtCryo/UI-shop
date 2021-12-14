@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from '../_model/product';
 import { HomeService } from '../_service/home.service';
 import { SiteSettingsService } from '../_service/adminService/site-settings.service';
+import { SiteSettings } from '../_model/site-settings';
 
 @Component({
   selector: 'app-home',
@@ -10,19 +11,19 @@ import { SiteSettingsService } from '../_service/adminService/site-settings.serv
 })
 export class HomeComponent implements OnInit {
 
+  siteSettings!: SiteSettings;
   products!: Product[];
-  siteSettingsService: SiteSettingsService;
 
-  constructor(private homeService: HomeService, private serviceSite: SiteSettingsService) {
-    this.siteSettingsService = serviceSite;
-    homeService.getRandomProducts().subscribe({
+  constructor(private homeService: HomeService, private readonly siteSettingService: SiteSettingsService) {
+  }
+
+  ngOnInit(): void {
+    this.siteSettingService.siteSettings$.subscribe((settings) => this.siteSettings = settings);
+    this.homeService.getRandomProducts().subscribe({
       next: (response)=>{
         this.products = response;
       }
     })
-  }
-
-  ngOnInit(): void {
   }
 
 }

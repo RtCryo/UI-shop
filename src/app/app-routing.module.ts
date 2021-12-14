@@ -22,9 +22,10 @@ const adminRoutes: Routes = [
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'product/:id', component: ProductComponent},
+  { path: 'product/**', redirectTo: '404'},
   { path: 'category', component: CategoryComponent},
   { path: 'admin', component: AdminComponent, children: adminRoutes},
-  { path: '**', redirectTo: '404' },
+  { path: '**', redirectTo: 'home' },
   { path: '404', component: NotFoundComponent},
 ];
 

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Category } from '../_model/category';
 import { CategoryService } from '../_service/category.service';
-import { NavbarService } from '../_service/navbar.service';
 import { SiteSettingsService } from '../_service/adminService/site-settings.service';
+import { SiteSettings } from '../_model/site-settings';
 
 @Component({
   selector: 'app-navbar',
@@ -11,15 +11,15 @@ import { SiteSettingsService } from '../_service/adminService/site-settings.serv
 })
 export class NavbarComponent implements OnInit {
 
+  siteSettings!: SiteSettings;
   categories!: Category[];
   status: string = "Home";
-  siteSettingsService: SiteSettingsService;
 
-  constructor(private categoryService: CategoryService, siteSettingsService: SiteSettingsService) {
-    this.siteSettingsService = siteSettingsService;
+  constructor(private categoryService: CategoryService, private readonly siteSettingService: SiteSettingsService) {
   }
 
   ngOnInit(): void {
+    this.siteSettingService.siteSettings$.subscribe((settings) => this.siteSettings = settings)
     this.categoryService.getAllCategory().subscribe({
       next: (category) => {
         this.categories = category;

@@ -13,18 +13,18 @@ export class CategoryComponent implements OnInit {
   name!: string;
   categoryProduct!: Product[];
 
-  private querySubscription: Subscription;
+  private querySubscription!: Subscription;
 
   constructor(private route: ActivatedRoute, private categoryService: CategoryService) {
-    this.querySubscription = route.queryParams.subscribe(
+  }
+
+  ngOnInit(): void {
+    this.querySubscription = this.route.queryParams.subscribe(
       (queryParam: any) => {
         this.name = queryParam['name'];
         this.getProduct();
       }
     );
-  }
-
-  ngOnInit(): void {
   }
 
   getProduct(){

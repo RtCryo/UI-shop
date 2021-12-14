@@ -1,13 +1,13 @@
 <div class="container-fluid mt-2" style="background-color: #859784;">
-    <div class="row" *ngIf = (siteSettingsService.siteSettings)>
+    <div class="row" *ngIf = (siteSettings)>
       <div class="col justify-content-center text-center">
-        {{siteSettingsService.siteSettings.info1}}
+        {{siteSettings.info1}}
       </div>
       <div class="col justify-content-center text-center">
-        {{siteSettingsService.siteSettings.info2}}
+        {{siteSettings.info2}}
       </div>
       <div class="col justify-content-center text-center">
-        {{siteSettingsService.siteSettings.info3}}
+        {{siteSettings.info3}}
       </div>
     </div>
   </div>

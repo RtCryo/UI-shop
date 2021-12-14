@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/internal/Observable';
+import { Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { SiteSettings } from '../../_model/site-settings';
 
@@ -9,7 +9,7 @@ import { SiteSettings } from '../../_model/site-settings';
 })
 export class SiteSettingsService {
 
-  public siteSettings!: SiteSettings
+  public siteSettings$ = new Subject<SiteSettings>();
 
   constructor(private http: HttpClient) {
     this.getSiteSettings();
@@ -18,12 +18,19 @@ export class SiteSettingsService {
   public getSiteSettings(){
     this.http.get<SiteSettings>(`${environment.hostUrl}/admin/settings`, {withCredentials: true}).subscribe({
       next: (response) => {
-        this.siteSettings = response;
+        this.siteSettings$.next(response);
       }
     });
-   }
+  }
 
-   updateSiteSettings(){
-    return this.http.post<SiteSettings>(`${environment.hostUrl}/admin/updateSettings`, this.siteSettings, {withCredentials: true});
+   updateSiteSettings(newSiteSettings: SiteSettings){
+    return this.http.post<SiteSettings>(`${environment.hostUrl}/admin/updateSettings`, newSiteSettings, {withCredentials: true}).subscribe({
+      next: () => {
+        this.getSiteSettings();
+      },
+      error: () => {
+        this.getSiteSettings();
+      }
+    });
   }
 }
