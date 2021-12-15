@@ -11,11 +11,11 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { ProductComponent } from './product/product.component';
 
 const adminRoutes: Routes = [
-  { path: 'users', component:  UsersAdminComponent},
-  { path: 'products', component:  ProductsAdminComponent},
-  { path: 'productsToDelete', component:ProductsAdminComponent},
-  { path: 'categories', component:  CategoriesAdminComponent},
-  { path: 'site', component:  SiteAdminComponent},
+  { path: 'users', component: UsersAdminComponent},
+  { path: 'products', component: ProductsAdminComponent},
+  { path: 'productsToDelete', component: ProductsAdminComponent},
+  { path: 'categories', component: CategoriesAdminComponent},
+  { path: 'site', component: SiteAdminComponent},
 ]
 
 

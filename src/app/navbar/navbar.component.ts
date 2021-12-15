@@ -19,7 +19,8 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.siteSettingService.siteSettings$.subscribe((settings) => this.siteSettings = settings)
+    this.siteSettingService.siteSettings$.subscribe((settings) => this.siteSettings = settings);
+    this.categoryService.category$.subscribe((categories) => this.categories = categories);
     this.categoryService.getAllCategory().subscribe({
       next: (category) => {
         this.categories = category;

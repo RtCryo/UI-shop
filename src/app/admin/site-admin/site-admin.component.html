@@ -1,7 +1,6 @@
-<form [formGroup]="settingForm" novalidate (ngSubmit)="submit()" *ngIf = "(siteSettings)">
+<form [formGroup]="settingForm" novalidate (ngSubmit)="submit()" *ngIf = "!(loading)">
     <div class = "row">
         <div class = "col mx-3">
-
             <div class="form-group input-group my-2">
                 <span class="input-group-text">Shop name</span>
                 <input type="text" class="form-control" formControlName="siteName" placeholder="{{siteSettings.siteName}}" id="siteName" aria-label="Site name" aria-describedby="buttonSiteName">
@@ -42,7 +41,7 @@
 <div class = "mx-3 mt-3">
     <div class="input-group mb-1">
         <span class="input-group-text">Upload logo</span>
-        <input type="file" class="form-control" id="inputGroupFile04" aria-describedby="uploadLogo" aria-label="Upload">
+        <input type="file" class="form-control" id="inputGroupFile04" (change)="selectLogo($event)" aria-describedby="uploadLogo" aria-label="Upload">
         <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04" (click) = "uploadNewLogo()">Upload</button>
     </div>
 

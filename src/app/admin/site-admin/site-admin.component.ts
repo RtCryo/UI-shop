@@ -1,6 +1,6 @@
 import { HttpEventType, HttpResponse } from '@angular/common/http';
-import { Component, OnInit, Input } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { SiteSettings } from 'src/app/_model/site-settings';
 import { SiteSettingsService } from 'src/app/_service/adminService/site-settings.service';
 import { UploadService } from 'src/app/_service/upload.service';
@@ -18,36 +18,36 @@ export class SiteAdminComponent implements OnInit {
   selectedLogo!: any;
   progress = 0;
   message: string = "";
-  loading: boolean = false;
+  loading: boolean = true;
   settingForm!: FormGroup;
 
   constructor(private uploadService: UploadService, private formBuilder: FormBuilder, private readonly siteSettingService: SiteSettingsService) { 
   }
 
   ngOnInit(): void {
-    this.siteSettingService.siteSettings$.subscribe((settings) => {
-      this.siteSettings = settings;
-      this.createNewForm();  
-    });
+    this.siteSettingService.siteSettings$.subscribe((settings) => this.siteSettings = settings);
+    this.siteSettingService.getSiteSettings().subscribe({
+      next: (response) => {
+        this.siteSettingService.siteSettings$.next(response);
+        this.loading = false;
+      }
+    })
   }
 
   createNewForm(){
     this.settingForm = this.formBuilder.group({
-          siteName: [this.siteSettings.siteName, Validators.required],
-          email: [this.siteSettings.email, Validators.required],
-          deliveryInfo: [this.siteSettings.deliveryInfo, Validators.required],
-          info1: [this.siteSettings.info1, Validators.required],
-          info2: [this.siteSettings.info2, Validators.required],
-          info3: [this.siteSettings.info3, Validators.required],
-          imgLogoName: [this.siteSettings.imgLogoName],
-          banner: [this.siteSettings.banner],
-          id: [this.siteSettings.id]
-      })
-    }
+      siteName: [this.siteSettings.siteName],
+      email: [this.siteSettings.email],
+      deliveryInfo: [this.siteSettings.deliveryInfo],
+      info1: [this.siteSettings.info1],
+      info2: [this.siteSettings.info2],
+      info3: [this.siteSettings.info3],
+  })
+  }
 
   uploadNewLogo(){
     if( this.selectedLogo) { 
-      let currentFile = this.selectedFile.item(0)!;
+      let currentFile = this.selectedLogo.item(0)!;
       this.uploadService.uploadSiteFile(currentFile).subscribe({
         next: (event) => {
           if (event.type === HttpEventType.UploadProgress) {
@@ -106,7 +106,11 @@ export class SiteAdminComponent implements OnInit {
   deleteBanner(pic: string){}
 
   submit(){
-    this.siteSettingService.updateSiteSettings(this.settingForm.value);
+    let newSiteSettings:SiteSettings = this.settingForm.value;
+    newSiteSettings.id = this.siteSettings.id;
+    newSiteSettings.imgLogoName = this.siteSettings.imgLogoName;
+    newSiteSettings.banner = this.siteSettings.banner;
+    this.siteSettingService.updateSiteSettings(newSiteSettings);
   }
 
   checkAllOptions() {

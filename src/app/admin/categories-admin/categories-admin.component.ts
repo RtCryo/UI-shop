@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Category } from 'src/app/_model/category';
 import { CategoryAdminService } from 'src/app/_service/adminService/category-admin.service';
+import { CategoryService } from 'src/app/_service/category.service';
 
 @Component({
   selector: 'app-categories-admin',
@@ -16,17 +17,18 @@ export class CategoriesAdminComponent implements OnInit {
   isEdit: boolean = false;
   categoryToEdit!: Category;
 
-  constructor(private categoryService: CategoryAdminService) {
+  constructor(private categoryAdminService: CategoryAdminService, private categoryService: CategoryService) {
     this.getAllCategory();
    }
 
   ngOnInit(): void {
+    this.categoryService.category$.subscribe((categories) => this.categories = categories)
   }
 
   getAllCategory(){
-    this.categoryService.getAllCategory().subscribe({
+    this.categoryAdminService.getAllCategory().subscribe({
       next: (response) => {
-        this.categories = response;
+        this.categoryService.category$.next(response);
       }
     })
   }
@@ -41,7 +43,7 @@ export class CategoriesAdminComponent implements OnInit {
   submit(){
     if(this.categoryForm.valid){
       if(!this.isEdit) {
-        this.categoryService.saveCategory(this.categoryForm.value).subscribe({
+        this.categoryAdminService.saveCategory(this.categoryForm.value).subscribe({
           next: () => {
             this.getAllCategory();
           },
@@ -53,7 +55,7 @@ export class CategoriesAdminComponent implements OnInit {
         let category = new Category;
         category.id = this.categoryToEdit.id;
         category.categoryName = this.categoryForm.controls['categoryName'].value;
-        this.categoryService.updateCategory(category).subscribe({
+        this.categoryAdminService.updateCategory(category).subscribe({
           next: () => {
             this.getAllCategory();
           },
@@ -92,7 +94,7 @@ export class CategoriesAdminComponent implements OnInit {
   }
 
   deleteProduct(category: Category){
-    this.categoryService.sendToDelete(category).subscribe({
+    this.categoryAdminService.sendToDelete(category).subscribe({
       next: () => {
         
       },
@@ -117,7 +119,7 @@ export class CategoriesAdminComponent implements OnInit {
       }
     })
     if(listToDelete.length > 0) {
-      this.categoryService.sendListToDelete(listToDelete).subscribe({
+      this.categoryAdminService.sendListToDelete(listToDelete).subscribe({
         next: () => {
           this.getAllCategory();
           this.resetCheckAll();
