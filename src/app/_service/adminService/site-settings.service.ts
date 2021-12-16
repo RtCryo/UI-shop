@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, ReplaySubject } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { SiteSettings } from '../../_model/site-settings';
 
@@ -21,7 +21,11 @@ export class SiteSettingsService {
    updateSiteSettings(newSiteSettings: SiteSettings){
     return this.http.post<SiteSettings>(`${environment.hostUrl}/admin/updateSettings`, newSiteSettings, {withCredentials: true}).subscribe({
       next: () => {
-        this.getSiteSettings();
+        this.getSiteSettings().subscribe({
+          next: (response) => {
+            this.siteSettings$.next(response);
+          }
+        });
       },
       error: () => {
         this.getSiteSettings();

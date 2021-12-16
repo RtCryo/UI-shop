@@ -20,6 +20,10 @@ export class SiteAdminComponent implements OnInit {
   message: string = "";
   loading: boolean = true;
   settingForm!: FormGroup;
+  logoError: boolean = true;
+  imgError: boolean = true;
+  errorMsgLogo = "";
+  errorMsgImg = "";
 
   constructor(private uploadService: UploadService, private formBuilder: FormBuilder, private readonly siteSettingService: SiteSettingsService) { 
   }
@@ -29,6 +33,7 @@ export class SiteAdminComponent implements OnInit {
     this.siteSettingService.getSiteSettings().subscribe({
       next: (response) => {
         this.siteSettingService.siteSettings$.next(response);
+        this.createNewForm();
         this.loading = false;
       }
     })
@@ -48,22 +53,26 @@ export class SiteAdminComponent implements OnInit {
   uploadNewLogo(){
     if( this.selectedLogo) { 
       let currentFile = this.selectedLogo.item(0)!;
-      this.uploadService.uploadSiteFile(currentFile).subscribe({
+      this.uploadService.uploadSiteLogo(currentFile).subscribe({
         next: (event) => {
           if (event.type === HttpEventType.UploadProgress) {
             if(event.total) {
               this.progress = Math.round(100 * event.loaded / event.total);
             }
           } else if (event instanceof HttpResponse) {
+            this.siteSettings.imgLogoName = event.body.message;
+            /* this.siteSettingService.siteSettings$.next(this.siteSettings); */
             this.submit();
           }
         },
         error: () => {
           this.progress = 0;
-          this.message = 'Could not upload the file!';
+          this.errorMsgLogo = 'Could not upload the file!';
+          setInterval(() => {this.errorMsgLogo = "";}, 8000);
           this.loading = false;
         },
         complete: () => {
+          this.logoError = true;
         }
       });
   }
@@ -80,13 +89,14 @@ export class SiteAdminComponent implements OnInit {
             }
           } else if (event instanceof HttpResponse) {
             this.siteSettings.banner.push(event.body.message);
-            this.siteSettingService.siteSettings$.next(this.siteSettings);
+            /* this.siteSettingService.siteSettings$.next(this.siteSettings); */
             this.submit();
           }
         },
         error: () => {
           this.progress = 0;
-          this.message = 'Could not upload the file!';
+          this.errorMsgImg = 'Could not upload the file!';
+          setInterval(() => {this.errorMsgImg = "";}, 8000);
           this.loading = false;
         },
         complete: () => {
@@ -96,14 +106,39 @@ export class SiteAdminComponent implements OnInit {
 }
 
   selectFile(event: any){
-    this.selectedFile = event.target.files;
+    this.errorMsgImg = "";
+    let t = event.target.files.item(0).type;
+    if(t === "image/jpeg" || t === "image/png"){
+      this.selectedFile = event.target.files;
+      this.imgError = false;
+      return;
+    }
+    this.errorMsgImg = "Only jpg or png images";
+    setInterval(() => {this.errorMsgImg = "";}, 8000);
+    this.imgError = true;
   }
 
   selectLogo(event: any){
-    this.selectedLogo = event.target.files;
+    this.errorMsgLogo = "";
+    if(event.target.files.item(0).type === 'image/png'){
+      this.selectedLogo = event.target.files;
+      this.logoError = false;
+      return;
+    }
+    this.errorMsgLogo = "Only png logo";
+    setInterval(() => {this.errorMsgLogo = "";}, 8000);
+    this.logoError = true;
   }
 
-  deleteBanner(pic: string){}
+  deleteBanner(pic: string){
+    this.siteSettings.banner.forEach((element, index) => {
+      if(element === pic) {
+        this.siteSettings.banner.splice(index, 1);
+      }
+    });
+    /* this.siteSettingService.siteSettings$.next(this.siteSettings); */
+    this.submit();
+  }
 
   submit(){
     let newSiteSettings:SiteSettings = this.settingForm.value;
