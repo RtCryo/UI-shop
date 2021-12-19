@@ -4,7 +4,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="loginModalLabel">Login:</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" #closebutton class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <div *ngIf="!registration; then thenBlock else elseBlock"></div>
@@ -95,35 +95,38 @@
           </li>
         </ul>
         <ul class="navbar-nav me-4 fw-bold">
+          <li class="nav-item mx-2">
+              <a class="nav-link text-white" routerLink="/admin" *ngIf="isAdmin">Admin page</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav me-4 fw-bold">
             <li class="nav-item mx-2">
                 <a class="nav-link text-white" href="#">Contact</a>
             </li>
-          </ul>
+        </ul>
       </div>
     </div>
   </nav>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light" *ngIf = (siteSettings)>
-    <div class="container-fluid nav-fill">
-        <ul class="nav-item navbar-brand my-auto">
+  <div class="bg-light" *ngIf = (siteSettings)>
+    <div class="container-fluid">
+      <div class = "row align-items-center">
+        <div class="col d-flex justify-content-center">
             <img src="/assets/img/{{siteSettings.imgLogoName}}" alt="" width="80" height="80">
-        </ul>
-        <form class="nav-item d-flex justify-content-center my-auto">
+        </div>
+        <form class="col-5 d-flex">
             <input class="form-control" type="search" placeholder="Search" id="navBarSearchForm" aria-label="Search">
             <button class="btn btn-outline-success mx-2" type="submit">Search</button>
         </form>
-        <ul class="navbar-nav nav-item mb-lg-0 justify-content-center">
-            <li class="mx-3">
-                <div class = "btn" (click) = "registration = false" data-bs-toggle="modal" data-bs-target="#loginModal"><img src="/assets/img/account.png" alt="" width="24" height="24"></div>
-            </li>
-            <li class="mx-3">
-                <div class = "btn"><img src="/assets/img/love.png" href="#" alt="" width="24" height="24"></div>
-            </li>
-            <li class="mx-3">
-                <div class = "btn"><img src="/assets/img/cart.png" href="#" alt="" width="24" height="24"></div>
-            </li>
-        </ul>
+        <div class = "col d-flex justify-content-center fw-bold">Welcome to {{siteSettings.siteName}}</div>
+        <div class="col d-flex justify-content-end pe-5">
+            <div class = "col d-flex justify-content-end align-self-center fw-bold">{{userEmail}}</div>
+            <div class = "btn" (click) = "registration = false" data-bs-toggle="modal" data-bs-target="#loginModal"><img src="/assets/img/account.png" alt="" width="24" height="24"></div>
+            <div class = "btn"><img src="/assets/img/love.png" href="#" alt="" width="24" height="24"></div>
+            <div class = "btn"><img src="/assets/img/cart.png" href="#" alt="" width="24" height="24"></div>
+        </div>
+      </div>
     </div>
-  </nav>
+  </div>
   <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #859784;" *ngIf = "categories">
     <div class="container-fluid nav-fill">
         <ul class="navbar-nav nav-item mb-lg-0 justify-content-center">

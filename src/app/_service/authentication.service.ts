@@ -25,6 +25,10 @@ export class AuthenticationService {
     return this.currentUserSubject.value;
   }
 
+  isAdmin(user: User) {
+    return this.http.post<boolean>(`${environment.hostUrl}/admin`, user, {withCredentials: true});
+  }
+
   login(user: User) {
       return this.http.post<User>(`${environment.hostUrl}/auth/login`, user)
           .pipe(map(user => {
@@ -44,7 +48,7 @@ export class AuthenticationService {
 }
 
   logout() {
-      localStorage.removeItem('user');
+      localStorage.removeItem('currentUser');
       this.currentUserSubject.next(null!);
       this.router.navigate(['/home']);
   }

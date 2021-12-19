@@ -6,7 +6,7 @@ import { SiteSettings } from '../_model/site-settings';
 import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { AuthenticationService } from '../_service/authentication.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Role } from '../_model/role';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -23,8 +23,8 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-
   @ViewChild('closebutton') closebutton: any;
+
   siteSettings!: SiteSettings;
   categories!: Category[];
   status: string = "Home";
@@ -34,17 +34,22 @@ export class NavbarComponent implements OnInit {
   loading = false;
   registration = false;
   matcher = new MyErrorStateMatcher();
+  isAdmin: boolean = false;
+  userEmail: string = "";
 
   constructor(private categoryService: CategoryService, 
     private readonly siteSettingService: SiteSettingsService, 
     private formBuilder: FormBuilder, 
-    private authenticationService: AuthenticationService,
-    private route: ActivatedRoute,
-    private router: Router,) {
+    private authenticationService: AuthenticationService) {
   }
 
   ngOnInit(): void {
     this.siteSettingService.siteSettings$.subscribe((settings) => this.siteSettings = settings);
+    this.authenticationService.currentUser.subscribe((user) => {
+      this.userEmail = "";
+      this.isAdmin = (user?.role === Role.Admin);
+      this.userEmail = user?.email;
+    })
     this.categoryService.category$.subscribe((categories) => this.categories = categories);
     this.categoryService.getAllCategory().subscribe({
       next: (category) => {

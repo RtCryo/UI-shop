@@ -15,11 +15,8 @@ import { UsersAdminComponent } from './admin/users-admin/users-admin.component';
 import { ProductsAdminComponent } from './admin/products-admin/products-admin.component';
 import { CategoriesAdminComponent } from './admin/categories-admin/categories-admin.component';
 import { SiteAdminComponent } from './admin/site-admin/site-admin.component';
-import { MatSelectModule } from '@angular/material/select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatRadioModule } from '@angular/material/radio';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ErrorInterceptor } from './_config/error.interceptor';
 import { JwtInterceptor } from './_config/jwt.interceptor';
@@ -49,7 +46,7 @@ import { JwtInterceptor } from './_config/jwt.interceptor';
     BrowserAnimationsModule
   ],
   providers: [
-    /* { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }, */
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
