@@ -22,6 +22,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ErrorInterceptor } from './_config/error.interceptor';
+import { JwtInterceptor } from './_config/jwt.interceptor';
 
 @NgModule({
   declarations: [
@@ -39,10 +40,7 @@ import { ErrorInterceptor } from './_config/error.interceptor';
     NotFoundComponent
   ],
   imports: [
-    MatRadioModule,
     MatInputModule,
-    MatFormFieldModule,
-    MatSelectModule,
     BrowserModule,
     AppRoutingModule,    
     FormsModule,
@@ -52,6 +50,7 @@ import { ErrorInterceptor } from './_config/error.interceptor';
   ],
   providers: [
     /* { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }, */
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })

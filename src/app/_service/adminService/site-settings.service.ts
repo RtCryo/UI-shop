@@ -15,7 +15,7 @@ export class SiteSettingsService {
   }
 
   public getSiteSettings(){
-    return this.http.get<SiteSettings>(`${environment.hostUrl}/admin/settings`, {withCredentials: true});
+    return this.http.get<SiteSettings>(`${environment.hostUrl}/settings`, {withCredentials: true});
   }
 
    updateSiteSettings(newSiteSettings: SiteSettings){

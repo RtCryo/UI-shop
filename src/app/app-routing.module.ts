@@ -9,6 +9,8 @@ import { CategoryComponent } from './category/category.component';
 import { HomeComponent } from './home/home.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ProductComponent } from './product/product.component';
+import { AuthGuard } from './_guards/auth.guard';
+import { Role } from './_model/role';
 
 const adminRoutes: Routes = [
   { path: 'users', component: UsersAdminComponent},
@@ -24,7 +26,7 @@ const routes: Routes = [
   { path: 'product/:id', component: ProductComponent},
   { path: 'product/**', redirectTo: '404'},
   { path: 'category', component: CategoryComponent},
-  { path: 'admin', component: AdminComponent, children: adminRoutes},
+  { path: 'admin', component: AdminComponent, children: adminRoutes, canActivate: [AuthGuard], data: { roles: [Role.Admin]}},
   { path: '**', redirectTo: 'home' },
   { path: '404', component: NotFoundComponent},
 ];
