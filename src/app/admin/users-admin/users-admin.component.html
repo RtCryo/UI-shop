@@ -1,1 +1,112 @@
-<p>users-admin works!</p>
+<!-- Modal -->
+<div class="modal fade" data-bs-backdrop="static" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="userModalLabel">User update:</h5>
+        <button type="button" #closebutton class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+        <div class="modal-body">
+          <div class="row">
+            <div class = "col" *ngIf = (userForm)>
+
+              <form [formGroup]="userForm" (ngSubmit)="submit()" novalidate>
+                
+                <div class="form-group input-group">
+                  <span class="input-group-text fw-bold" style="width: 10rem;">User name</span>
+                  <input class="form-control" name="name" formControlName="name" />
+                </div>
+                <div class="text-danger text-center" *ngIf="userForm.controls['name'].invalid && userForm.controls['name'].touched">
+                  Name is required
+                </div>
+
+                <div class="form-group input-group">
+                  <span class="input-group-text fw-bold" style="width: 10rem;">Email</span>
+                  <input class="form-control" name="email" formControlName="email" />
+                </div>
+                <div class="text-danger text-center" *ngIf="userForm.controls['email'].invalid && userForm.controls['email'].touched">
+                  Email is required
+                </div>
+
+                <div class="input-group form-group">
+                  <label class="input-group-text fw-bold" for="inputGroupSelect01" style="width: 10rem;">Role</label>
+                  <select class="form-select" id="inputGroupSelect01" formControlName="role">
+                    <option *ngFor="let role of getRoles()">{{role}}</option>
+                  </select>
+                </div>
+                <div class="text-danger text-center" *ngIf="userForm.controls['role'].invalid && userForm.controls['role'].touched">
+                  Role is required
+                </div>
+
+
+                <div class="input-group form-group">
+                  <label class="input-group-text fw-bold" for="inputGroupSelect01" style="width: 10rem;">Status</label>
+                  <select class="form-select" id="inputGroupSelect01" name="status" formControlName="status">
+                    <option *ngFor="let status of getStatus()">{{status}}</option>
+                  </select>
+                </div>
+                <div class="text-danger text-center" *ngIf="userForm.controls['status'].invalid && userForm.controls['status'].touched">
+                  Status is required
+                </div>
+
+                <div class="input-group form-group">
+                  <label class="input-group-text fw-bold" for="inputGroupSelect01" style="width: 10rem;">Enabled</label>
+                  <select class="form-select" id="inputGroupSelect01" name="enabled" formControlName="enabled">
+                    <option>true</option>
+                    <option>false</option>
+                  </select>
+                </div>
+                <div class="text-danger text-center" *ngIf="userForm.controls['enabled'].invalid && userForm.controls['enabled'].touched">
+                  Enabled is required
+                </div>
+
+                <div class="modal-footer mt-3">
+                  <div class="form-group" align="end">
+                    <button class="btn btn-success mx-2" [disabled]="userForm.invalid" style="width: 6rem;">
+                      Save
+                    </button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="width: 6rem;">Close</button>
+                  </div>
+                </div>
+
+              </form>
+
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+
+<div class = "row">
+    <table class="table table-striped table-hover table-bordered align-middle" *ngIf="!loading">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">User name</th>
+            <th scope="col">E-mail</th>
+            <th scope="col">Role</th>
+            <th scope="col">Status</th>
+            <th scope="col">Managment</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users; let t = index">
+            <th scope="row">{{t + 1}}</th>
+            <td>{{user.name}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.role}}</td>
+            <td>{{user.status}}</td>
+            <td>
+              <div class="btn-group btn-group-sm ms-2">
+                <button class="btn btn-info" style="width: 4rem;" (click) = "updateUser(user)" data-bs-toggle="modal" data-bs-target="#userModal">Edit</button>
+                <button class="btn btn-danger" style="width: 4rem;" (click) = "deleteUser(user)">Delete</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+</div>

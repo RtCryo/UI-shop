@@ -9,6 +9,6 @@ export class User{
     public password!: string;
     public role!: Role;
     public status!: Status;
-    public enebled!: boolean;
+    public enabled!: boolean;
     public token!: string;
 }

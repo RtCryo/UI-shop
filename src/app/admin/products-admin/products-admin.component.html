@@ -1,9 +1,9 @@
 <!-- Modal -->
-<div class="modal fade" data-bs-backdrop="static" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" data-bs-backdrop="static" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Create new product:</h5>
+        <h5 class="modal-title" id="productModalLabel">Create new product:</h5>
         <button type="button" #closebutton class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -98,7 +98,7 @@
 </div>
 
 <div class = "row">
-  <table class="table table-sm table-striped table-bordered align-middle">
+  <table class="table table-sm table-striped table-bordered align-middle table-hover">
     <thead>
         <tr>
           <th scope="col">#</th>
@@ -136,7 +136,7 @@
 </div>
 <div class = "row">
   <div class ="col d-flex justify-content-start">
-    <button type="button" class="btn btn-primary btn-sm" (click)="createNewForm()" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    <button type="button" class="btn btn-primary btn-sm" (click)="createNewForm()" data-bs-toggle="modal" data-bs-target="#productModal">
       Create new product
     </button>
   </div>

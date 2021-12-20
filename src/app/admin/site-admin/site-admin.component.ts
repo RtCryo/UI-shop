@@ -61,7 +61,6 @@ export class SiteAdminComponent implements OnInit {
             }
           } else if (event instanceof HttpResponse) {
             this.siteSettings.imgLogoName = event.body.message;
-            /* this.siteSettingService.siteSettings$.next(this.siteSettings); */
             this.submit();
           }
         },
@@ -69,7 +68,6 @@ export class SiteAdminComponent implements OnInit {
           this.progress = 0;
           this.errorMsgLogo = 'Could not upload the file!';
           setInterval(() => {this.errorMsgLogo = "";}, 8000);
-          this.loading = false;
         },
         complete: () => {
           this.logoError = true;
@@ -89,7 +87,6 @@ export class SiteAdminComponent implements OnInit {
             }
           } else if (event instanceof HttpResponse) {
             this.siteSettings.banner.push(event.body.message);
-            /* this.siteSettingService.siteSettings$.next(this.siteSettings); */
             this.submit();
           }
         },
@@ -97,7 +94,6 @@ export class SiteAdminComponent implements OnInit {
           this.progress = 0;
           this.errorMsgImg = 'Could not upload the file!';
           setInterval(() => {this.errorMsgImg = "";}, 8000);
-          this.loading = false;
         },
         complete: () => {
         }
@@ -136,7 +132,6 @@ export class SiteAdminComponent implements OnInit {
         this.siteSettings.banner.splice(index, 1);
       }
     });
-    /* this.siteSettingService.siteSettings$.next(this.siteSettings); */
     this.submit();
   }
 
