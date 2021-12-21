@@ -10,11 +10,11 @@
 
         <div class="modal-body">
           <div class="row">
-            <div class = "col" *ngIf = (userForm)>
+            <div class = "col" >
 
               <form [formGroup]="userForm" (ngSubmit)="submit()" novalidate>
                 
-                <div class="form-group input-group">
+                <div class="form-group input-group mb-1">
                   <span class="input-group-text fw-bold" style="width: 10rem;">User name</span>
                   <input class="form-control" name="name" formControlName="name" />
                 </div>
@@ -22,7 +22,7 @@
                   Name is required
                 </div>
 
-                <div class="form-group input-group">
+                <div class="form-group input-group mb-1">
                   <span class="input-group-text fw-bold" style="width: 10rem;">Email</span>
                   <input class="form-control" name="email" formControlName="email" />
                 </div>
@@ -30,9 +30,9 @@
                   Email is required
                 </div>
 
-                <div class="input-group form-group">
-                  <label class="input-group-text fw-bold" for="inputGroupSelect01" style="width: 10rem;">Role</label>
-                  <select class="form-select" id="inputGroupSelect01" formControlName="role">
+                <div class="input-group form-group mb-1">
+                  <label class="input-group-text fw-bold" for="inputGroupSelectRole" style="width: 10rem;">Role</label>
+                  <select class="form-select" id="inputGroupSelectRole" formControlName="role">
                     <option *ngFor="let role of getRoles()">{{role}}</option>
                   </select>
                 </div>
@@ -41,9 +41,9 @@
                 </div>
 
 
-                <div class="input-group form-group">
-                  <label class="input-group-text fw-bold" for="inputGroupSelect01" style="width: 10rem;">Status</label>
-                  <select class="form-select" id="inputGroupSelect01" name="status" formControlName="status">
+                <div class="input-group form-group mb-1">
+                  <label class="input-group-text fw-bold" for="inputGroupSelectStatus" style="width: 10rem;">Status</label>
+                  <select class="form-select" id="inputGroupSelectStatus" name="status" formControlName="status">
                     <option *ngFor="let status of getStatus()">{{status}}</option>
                   </select>
                 </div>
@@ -51,15 +51,11 @@
                   Status is required
                 </div>
 
-                <div class="input-group form-group">
-                  <label class="input-group-text fw-bold" for="inputGroupSelect01" style="width: 10rem;">Enabled</label>
-                  <select class="form-select" id="inputGroupSelect01" name="enabled" formControlName="enabled">
-                    <option>true</option>
-                    <option>false</option>
-                  </select>
-                </div>
-                <div class="text-danger text-center" *ngIf="userForm.controls['enabled'].invalid && userForm.controls['enabled'].touched">
-                  Enabled is required
+                <div class="form-check form-group mt-3">
+                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" formControlName="enabled" name="enabled">
+                  <label class="form-check-label" for="flexCheckDefault">
+                    Enabled
+                  </label>
                 </div>
 
                 <div class="modal-footer mt-3">

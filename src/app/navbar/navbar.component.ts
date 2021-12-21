@@ -100,6 +100,7 @@ export class NavbarComponent implements OnInit {
       .subscribe({
           next: () => {
             this.closebutton.nativeElement.click();
+            this.error = "";
           },
           error: () => {
               this.error = "Invalid Credentials";
@@ -111,6 +112,7 @@ export class NavbarComponent implements OnInit {
       .subscribe({
           next: () => {
             this.closebutton.nativeElement.click();
+            this.error = "";
           },
           error: () => {
               this.error = "Invalid Credentials";

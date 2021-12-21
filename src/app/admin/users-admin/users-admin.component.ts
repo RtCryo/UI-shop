@@ -22,7 +22,14 @@ export class UsersAdminComponent implements OnInit {
   constructor(private userAdminService: UserAdminService, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
-    this.getAlluser()
+    this.getAlluser();
+    this.userForm = this.formBuilder.group({
+      name: [],
+      email: [],
+      role: [],
+      status: [],
+      enabled: []
+    });
   }
 
   getAlluser(){
