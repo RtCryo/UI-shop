@@ -18,6 +18,8 @@ export class UsersAdminComponent implements OnInit {
   loading = true;
   roles = Role;
   statuses = Status;
+  error = "";
+  userToUpdate!: User;
 
   constructor(private userAdminService: UserAdminService, private formBuilder: FormBuilder) { }
 
@@ -44,6 +46,8 @@ export class UsersAdminComponent implements OnInit {
   }
 
   updateUser(user: User){
+    this.error = "";
+    this.userToUpdate = user;
     this.userForm = this.formBuilder.group({
       name: [user.name],
       email: [user.email],
@@ -73,7 +77,20 @@ export class UsersAdminComponent implements OnInit {
   }
 
   submit(){
-
+    this.userToUpdate.email = this.userForm.controls['email'].value;
+    this.userToUpdate.name = this.userForm.controls['name'].value;
+    this.userToUpdate.role = this.userForm.controls['role'].value;
+    this.userToUpdate.status = this.userForm.controls['status'].value;
+    this.userToUpdate.enabled = this.userForm.controls['enabled'].value;
+    this.userAdminService.updateUser(this.userToUpdate).subscribe({
+      next: () =>{
+        this.getAlluser();
+        this.closebutton.nativeElement.click();
+      },
+      error: (errorMsg) => {
+        this.error = errorMsg;
+      }
+    })
   }
 
 }

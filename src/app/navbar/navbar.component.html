@@ -120,7 +120,8 @@
         <div class = "col d-flex justify-content-center fw-bold">Welcome to {{siteSettings.siteName}}</div>
         <div class="col d-flex justify-content-end pe-5">
             <div class = "col d-flex justify-content-end align-self-center fw-bold">{{userEmail}}</div>
-            <div class = "btn" (click) = "registration = false" data-bs-toggle="modal" data-bs-target="#loginModal"><img src="/assets/img/account.png" alt="" width="24" height="24"></div>
+            <div class = "btn" *ngIf = "this.userEmail"><img src="/assets/img/account.png" alt="" width="24" height="24"></div>
+            <div class = "btn" *ngIf = "!this.userEmail" (click) = "registration = false" data-bs-toggle="modal" data-bs-target="#loginModal"><img src="/assets/img/account.png" alt="" width="24" height="24"></div>
             <div class = "btn"><img src="/assets/img/love.png" href="#" alt="" width="24" height="24"></div>
             <div class = "btn"><img src="/assets/img/cart.png" href="#" alt="" width="24" height="24"></div>
         </div>

@@ -60,6 +60,7 @@ export class NavbarComponent implements OnInit {
   }
 
   createLoginForm(){
+    this.error = "";
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]]
@@ -67,6 +68,7 @@ export class NavbarComponent implements OnInit {
   }
 
   createRegistrationForm(){
+    this.error = ""
     this.loginForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.pattern('[a-zA-Z_]*')]],
       email: ['', [Validators.required, Validators.email]],
