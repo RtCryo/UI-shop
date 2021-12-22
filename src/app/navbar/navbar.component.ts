@@ -3,10 +3,11 @@ import { Category } from '../_model/category';
 import { CategoryService } from '../_service/category.service';
 import { SiteSettingsService } from '../_service/adminService/site-settings.service';
 import { SiteSettings } from '../_model/site-settings';
-import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { AbstractControlOptions, FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { AuthenticationService } from '../_service/authentication.service';
 import { Role } from '../_model/role';
+import { UserService } from '../_service/user.service';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -36,15 +37,20 @@ export class NavbarComponent implements OnInit {
   matcher = new MyErrorStateMatcher();
   isAdmin: boolean = false;
   userEmail: string = "";
+  countGoods!: number;
+  wishList!: number;
 
   constructor(private categoryService: CategoryService, 
     private readonly siteSettingService: SiteSettingsService, 
     private formBuilder: FormBuilder, 
-    private authenticationService: AuthenticationService) {
+    private authenticationService: AuthenticationService,
+    private userService: UserService) {
   }
 
   ngOnInit(): void {
     this.siteSettingService.siteSettings$.subscribe((settings) => this.siteSettings = settings);
+    this.userService.cart$.subscribe((cart) => this.countGoods = cart.length);
+    this.userService.wishList$.subscribe((wishList) => this.wishList = wishList.length);
     this.authenticationService.currentUser.subscribe((user) => {
       this.userEmail = "";
       this.isAdmin = (user?.role === Role.Admin);
@@ -74,7 +80,7 @@ export class NavbarComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
       confirmPassword: ['']
-    }, {validator: this.checkPasswords})
+    }, {validator: this.checkPasswords} as AbstractControlOptions)
   }
 
   checkPasswords(group: FormGroup) {
@@ -91,6 +97,10 @@ export class NavbarComponent implements OnInit {
     } else {
       this.createLoginForm();
     }
+  }
+
+  logout() {
+    this.authenticationService.logout();
   }
 
   onSubmit() {

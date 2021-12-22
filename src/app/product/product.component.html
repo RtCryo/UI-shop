@@ -24,7 +24,7 @@
             <button class="btn btn btn-outline-secondary" style="color: black" (click)="onChanged(false)">&laquo;</button>
             <input class = "text-center mx-1" type="text" (change) = "updateValue($event)" [(ngModel)] = "value" style="width: 2rem;">
             <button class="btn btn btn-outline-secondary" style="color: black" (click)="onChanged(true)">&raquo;</button>
-            <button class="btn btn-info ms-2" style="width: 10rem;" type="submit" *ngIf = "disabled">Buy</button>
+            <button class="btn btn-info ms-2" style="width: 10rem;" type="submit" *ngIf = "disabled" (click) = "buy()">Buy</button>
             <button class="btn btn-info ms-2" style="width: 10rem;" type="submit" *ngIf = "!disabled">Order</button>
         </div>
     </div>

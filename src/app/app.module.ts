@@ -20,6 +20,10 @@ import { MatInputModule } from '@angular/material/input';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ErrorInterceptor } from './_config/error.interceptor';
 import { JwtInterceptor } from './_config/jwt.interceptor';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { ProfileComponent } from './user-profile/profile/profile.component';
+import { WishComponent } from './user-profile/wish/wish.component';
+import { PurchaseComponent } from './user-profile/purchase/purchase.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +38,11 @@ import { JwtInterceptor } from './_config/jwt.interceptor';
     ProductsAdminComponent,
     CategoriesAdminComponent,
     SiteAdminComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    UserProfileComponent,
+    ProfileComponent,
+    WishComponent,
+    PurchaseComponent
   ],
   imports: [
     MatInputModule,

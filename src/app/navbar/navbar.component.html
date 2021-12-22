@@ -106,7 +106,7 @@
         </ul>
       </div>
     </div>
-  </nav>
+</nav>
   <div class="bg-light" *ngIf = (siteSettings)>
     <div class="container-fluid">
       <div class = "row align-items-center">
@@ -120,10 +120,40 @@
         <div class = "col d-flex justify-content-center fw-bold">Welcome to {{siteSettings.siteName}}</div>
         <div class="col d-flex justify-content-end pe-5">
             <div class = "col d-flex justify-content-end align-self-center fw-bold">{{userEmail}}</div>
-            <div class = "btn" *ngIf = "this.userEmail"><img src="/assets/img/account.png" alt="" width="24" height="24"></div>
-            <div class = "btn" *ngIf = "!this.userEmail" (click) = "registration = false" data-bs-toggle="modal" data-bs-target="#loginModal"><img src="/assets/img/account.png" alt="" width="24" height="24"></div>
-            <div class = "btn"><img src="/assets/img/love.png" href="#" alt="" width="24" height="24"></div>
-            <div class = "btn"><img src="/assets/img/cart.png" href="#" alt="" width="24" height="24"></div>
+
+            <div *ngIf="this.userEmail; then thenBlock else elseBlock"></div>
+            <ng-template #thenBlock>
+              <div class="dropdown">
+                <div class="btn" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                  <img src="/assets/img/account.png" alt="" width="24" height="24">
+                </div>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  <li><a class="dropdown-item" routerLink="/user/profile">Profile</a></li>
+                  <li><a class="dropdown-item" routerLink="/user/wish">Wish list</a></li>
+                  <li><a class="dropdown-item" routerLink="/user/purchase">Cart</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" (click) = "logout()">Logout</a></li>
+                </ul>
+              </div>
+            </ng-template>
+            <ng-template #elseBlock>
+              <div class = "btn" (click) = "registration = false" data-bs-toggle="modal" data-bs-target="#loginModal"><img src="/assets/img/account.png" alt="" width="24" height="24"></div>
+            </ng-template>
+
+            <div class = "btn position-relative">
+              <img src="/assets/img/love.png" href="#" alt="" width="24" height="24">
+              <span class="position-absolute top-0 start-80 translate-middle badge rounded-pill bg-danger" *ngIf = "wishList > 0">
+                {{wishList}}
+              </span>
+            </div>
+
+            <div class = "btn position-relative">
+              <img src="/assets/img/cart.png" href="#" alt="" width="24" height="24">
+              <span class="position-absolute top-0 start-80 translate-middle badge rounded-pill bg-danger" *ngIf = "countGoods > 0">
+                {{countGoods}}
+              </span>
+            </div>
+
         </div>
       </div>
     </div>

@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Product } from '../_model/product';
 import { ProductService } from '../_service/product.service';
+import { UserService } from '../_service/user.service';
 
 @Component({
   selector: 'app-product',
@@ -16,7 +17,7 @@ export class ProductComponent implements OnInit {
   public imgName: string = "";
   private subscription: Subscription;
 
-  constructor(private activateRoute: ActivatedRoute, private productService: ProductService) {
+  constructor(private activateRoute: ActivatedRoute, private productService: ProductService, private userService: UserService) {
     this.subscription = activateRoute.params.subscribe(
       (params) => (this.showProduct(params['id']))
     )
@@ -53,5 +54,11 @@ export class ProductComponent implements OnInit {
     } else {
       this.value = 1;
     }
+  }
+
+  buy(){
+    let newCart = this.userService.getCurrentCart();
+    newCart.push(this.product);
+    this.userService.updateCurrentCart(newCart);
   }
 }

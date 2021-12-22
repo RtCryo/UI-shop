@@ -9,9 +9,15 @@ import { CategoryComponent } from './category/category.component';
 import { HomeComponent } from './home/home.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ProductComponent } from './product/product.component';
+import { ProfileComponent } from './user-profile/profile/profile.component';
+import { PurchaseComponent } from './user-profile/purchase/purchase.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { WishComponent } from './user-profile/wish/wish.component';
 import { AdminGuard } from './_guards/admin.guard';
+import { AuthGuard } from './_guards/auth.guard';
 
 const adminRoutes: Routes = [
+  { path: '', redirectTo: 'users', pathMatch: 'full'},
   { path: 'users', component: UsersAdminComponent},
   { path: 'products', component: ProductsAdminComponent},
   { path: 'productsToDelete', component: ProductsAdminComponent},
@@ -19,15 +25,22 @@ const adminRoutes: Routes = [
   { path: 'site', component: SiteAdminComponent},
 ]
 
+const userRoutes: Routes = [
+  { path: '', redirectTo: 'profile', pathMatch: 'full'},
+  { path: 'profile', component: ProfileComponent},
+  { path: 'wish', component: WishComponent},
+  { path: 'purchase', component: PurchaseComponent},
+]
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'product/:id', component: ProductComponent},
   { path: 'product/**', redirectTo: '404'},
   { path: 'category', component: CategoryComponent},
+  { path: 'user', component: UserProfileComponent, children: userRoutes, canActivate: [AuthGuard]},
+  { path: '404', component: NotFoundComponent},
   { path: 'admin', component: AdminComponent, children: adminRoutes, canActivate: [AdminGuard]},
   { path: '**', redirectTo: 'home' },
-  { path: '404', component: NotFoundComponent},
 ];
 
 @NgModule({
