@@ -33,7 +33,7 @@ const userRoutes: Routes = [
 ]
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent },
+  { path: 'home', component: HomeComponent},
   { path: 'product/:id', component: ProductComponent},
   { path: 'product/**', redirectTo: '404'},
   { path: 'category', component: CategoryComponent},

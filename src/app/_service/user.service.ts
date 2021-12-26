@@ -11,12 +11,16 @@ import { AuthenticationService } from './authentication.service';
 })
 export class UserService {
 
-  public cart$: BehaviorSubject<Product[]>;
-  public wishList$: BehaviorSubject<Product[]>;
+  public cart$: BehaviorSubject<Map<number, number>>;
+  public wishList$: BehaviorSubject<Map<number, number>>;
 
   constructor(private http: HttpClient, private authenticationService: AuthenticationService) {
-      this.cart$ = new BehaviorSubject<Product[]>(JSON.parse(localStorage.getItem('cart')!));
-      this.wishList$ = new BehaviorSubject<Product[]>(JSON.parse(localStorage.getItem('wishList')!));
+      this.cart$ = new BehaviorSubject<Map<number, number>>(this.jsonConvert('cart'));
+      this.wishList$ = new BehaviorSubject<Map<number, number>>(this.jsonConvert('wishList'));
+  }
+
+  jsonConvert(item: string){
+    return new Map<number, number>(JSON.parse(localStorage.getItem(item)!));
   }
 
   userToUpdate(user: User) {
@@ -31,14 +35,14 @@ export class UserService {
     return this.wishList$.value;
   }
 
-  updateCurrentCart(product: Product[]) {
-    localStorage.setItem('cart', JSON.stringify(product));
-    this.cart$.next(product);
+  updateCurrentCart(cart: Map<number, number>) {
+    localStorage.setItem('cart', JSON.stringify(Array.from(cart.entries())));
+    this.cart$.next(cart);
   }
 
-  updateWishList(product: Product[]) {
-    localStorage.setItem('wishList', JSON.stringify(product));
-    this.wishList$.next(product);
+  updateWishList(wishList: Map<number, number>) {
+    localStorage.setItem('wishList', JSON.stringify(Array.from(wishList.entries())));
+    this.wishList$.next(wishList);
   }
 
 }

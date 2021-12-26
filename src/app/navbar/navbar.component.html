@@ -140,19 +140,23 @@
               <div class = "btn" (click) = "registration = false" data-bs-toggle="modal" data-bs-target="#loginModal"><img src="/assets/img/account.png" alt="" width="24" height="24"></div>
             </ng-template>
 
-            <div class = "btn position-relative">
-              <img src="/assets/img/love.png" href="#" alt="" width="24" height="24">
-              <span class="position-absolute top-0 start-80 translate-middle badge rounded-pill bg-danger" *ngIf = "wishList > 0">
-                {{wishList}}
-              </span>
-            </div>
+            <a routerLink="/user/wish">
+              <div class = "btn position-relative">
+                <img src="/assets/img/love.png" alt="" width="24" height="24">
+                <span class="position-absolute top-0 start-80 translate-middle badge rounded-pill bg-danger" *ngIf = "wishList > 0">
+                  {{wishList}}
+                </span>
+              </div>
+            </a>
 
-            <div class = "btn position-relative">
-              <img src="/assets/img/cart.png" href="#" alt="" width="24" height="24">
-              <span class="position-absolute top-0 start-80 translate-middle badge rounded-pill bg-danger" *ngIf = "countGoods > 0">
-                {{countGoods}}
-              </span>
-            </div>
+            <a routerLink="/user/purchase">
+              <div class = "btn position-relative">
+                <img src="/assets/img/cart.png" alt="" width="24" height="24">
+                <span class="position-absolute top-0 start-80 translate-middle badge rounded-pill bg-danger" *ngIf = "countGoods > 0">
+                  {{countGoods}}
+                </span>
+              </div>
+            </a>
 
         </div>
       </div>

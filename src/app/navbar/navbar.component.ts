@@ -37,8 +37,9 @@ export class NavbarComponent implements OnInit {
   matcher = new MyErrorStateMatcher();
   isAdmin: boolean = false;
   userEmail: string = "";
-  countGoods!: number;
-  wishList!: number;
+  countGoods: number = 0;
+  wishList: number = 0;
+  totalSum: number = 0;
 
   constructor(private categoryService: CategoryService, 
     private readonly siteSettingService: SiteSettingsService, 
@@ -49,8 +50,21 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.siteSettingService.siteSettings$.subscribe((settings) => this.siteSettings = settings);
-    this.userService.cart$.subscribe((cart) => this.countGoods = cart.length);
-    this.userService.wishList$.subscribe((wishList) => this.wishList = wishList.length);
+    this.userService.cart$.subscribe((cart) => {
+      this.countGoods = 0;
+      if(cart && cart.size > 0) {
+        for (let entry of cart.entries()){
+          this.countGoods += entry[1];
+        }
+      }
+    });
+    this.userService.wishList$.subscribe((wishList) => {
+      if(wishList && wishList.size > 0) {
+        for (let entry of wishList.entries()){
+          this.wishList += entry[1];
+        }
+      }
+    });
     this.authenticationService.currentUser.subscribe((user) => {
       this.userEmail = "";
       this.isAdmin = (user?.role === Role.Admin);

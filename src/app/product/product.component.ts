@@ -27,8 +27,8 @@ export class ProductComponent implements OnInit {
   }
 
   updateValue(event: any){
-    if (Number(event.target.value) !== NaN) {
-      this.value > this.product.valueInStock? this.value = this.product.valueInStock: this.value < 1? this.value = 1: true;
+    if (!isNaN(event.target.value)) {
+      this.value > this.product.valueInStock? this.value = this.product.valueInStock: this.value < 1? this.value = 1: this.value = +event.target.value;
     } else {
       this.value = 1;
     }
@@ -58,7 +58,17 @@ export class ProductComponent implements OnInit {
 
   buy(){
     let newCart = this.userService.getCurrentCart();
-    newCart.push(this.product);
+    if(newCart && newCart.size > 0){
+      if(newCart.has(this.product.id)) {
+        let t = newCart.get(this.product.id);
+        newCart.set(this.product.id, t?t + this.value:0 )
+      } else {
+        newCart.set(this.product.id, this.value);
+      }
+    } else {
+      newCart = new Map();
+      newCart.set(this.product.id,this.value);
+    }
     this.userService.updateCurrentCart(newCart);
   }
 }
