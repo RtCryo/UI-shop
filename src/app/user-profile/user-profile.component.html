@@ -2,9 +2,9 @@
   <div class = "row">
       <div class = "col-2">
           <nav class="nav flex-column">
-              <a class="nav-link btn text-center" style="color:black" routerLink="/user/profile">Profile</a>
-              <a class="nav-link btn text-center" style="color:black" routerLink="/user/wish">Wish list</a>
-              <a class="nav-link btn text-center" style="color:black" routerLink="/user/purchase">Cart</a>
+              <a class="nav-link btn text-center" (click)="selectMenu('Profile')" [ngClass]="status === 'Profile' ? 'fs-4 fw-bold' : 'text-black'" style="color:black" routerLink="/user/profile">Profile</a>
+              <a class="nav-link btn text-center" (click)="selectMenu('Wish')" [ngClass]="status === 'Wish' ? 'fs-4 fw-bold' : 'text-black'" style="color:black" routerLink="/user/wish">Wish list</a>
+              <a class="nav-link btn text-center" (click)="selectMenu('Cart')" [ngClass]="status === 'Cart' ? 'fs-4 fw-bold' : 'text-black'" style="color:black" routerLink="/user/purchase">Cart</a>
             </nav>
       </div>
       <div class = "col">

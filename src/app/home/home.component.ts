@@ -3,6 +3,7 @@ import { Product } from '../_model/product';
 import { HomeService } from '../_service/home.service';
 import { SiteSettingsService } from '../_service/adminService/site-settings.service';
 import { SiteSettings } from '../_model/site-settings';
+declare var $: any;
 
 @Component({
   selector: 'app-home',
@@ -23,7 +24,10 @@ export class HomeComponent implements OnInit {
       next: (response)=>{
         this.products = response;
       }
-    })
+    });
+    $(document).ready(function(){
+      $('.carousel').carousel();
+    });
   }
 
 }

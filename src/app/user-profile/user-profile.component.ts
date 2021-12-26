@@ -8,9 +8,15 @@ import { Router } from '@angular/router';
 })
 export class UserProfileComponent implements OnInit {
 
+  status: string = "Profile"
+
   constructor(private router: Router) { }
 
   ngOnInit(): void {
+  }
+
+  selectMenu(menu: string){
+    this.status = menu;
   }
 
 }
