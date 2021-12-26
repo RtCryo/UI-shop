@@ -71,4 +71,19 @@ export class ProductComponent implements OnInit {
     }
     this.userService.updateCurrentCart(newCart);
   }
+
+  wish(){
+    let newWish = this.userService.getWishList();
+    if(newWish && newWish.length > 0) {
+      if(newWish.indexOf(this.product.id) < 0){
+        newWish.push(this.product.id);
+      } else {
+        return;
+      }
+    } else {
+      newWish = [];
+      newWish.push(this.product.id);
+    }
+    this.userService.updateWishList(newWish);
+  }
 }

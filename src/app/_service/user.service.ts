@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Product } from '../_model/product';
 import { User } from '../_model/user';
 import { AuthenticationService } from './authentication.service';
 
@@ -12,11 +11,11 @@ import { AuthenticationService } from './authentication.service';
 export class UserService {
 
   public cart$: BehaviorSubject<Map<number, number>>;
-  public wishList$: BehaviorSubject<Map<number, number>>;
+  public wishList$: BehaviorSubject<number[]>;
 
   constructor(private http: HttpClient, private authenticationService: AuthenticationService) {
       this.cart$ = new BehaviorSubject<Map<number, number>>(this.jsonConvert('cart'));
-      this.wishList$ = new BehaviorSubject<Map<number, number>>(this.jsonConvert('wishList'));
+      this.wishList$ = new BehaviorSubject<number[]>(JSON.parse(localStorage.getItem('wishList')!));
   }
 
   jsonConvert(item: string){
@@ -40,8 +39,8 @@ export class UserService {
     this.cart$.next(cart);
   }
 
-  updateWishList(wishList: Map<number, number>) {
-    localStorage.setItem('wishList', JSON.stringify(Array.from(wishList.entries())));
+  updateWishList(wishList:number[]) {
+    localStorage.setItem('wishList', JSON.stringify(wishList));
     this.wishList$.next(wishList);
   }
 

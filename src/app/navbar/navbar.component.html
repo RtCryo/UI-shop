@@ -153,7 +153,10 @@
               <div class = "btn position-relative">
                 <img src="/assets/img/cart.png" alt="" width="24" height="24">
                 <span class="position-absolute top-0 start-80 translate-middle badge rounded-pill bg-danger" *ngIf = "countGoods > 0">
-                  {{countGoods}}
+                  {{countGoods}}{{over}}
+                </span>
+                <span class="position-absolute top-100 start-100 translate-middle badge rounded-pill bg-light text-dark" *ngIf = "totalSum > 0">
+                  {{totalSum | currency}}
                 </span>
               </div>
             </a>

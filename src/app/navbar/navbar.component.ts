@@ -8,6 +8,7 @@ import { ErrorStateMatcher } from '@angular/material/core';
 import { AuthenticationService } from '../_service/authentication.service';
 import { Role } from '../_model/role';
 import { UserService } from '../_service/user.service';
+import { ProductService } from '../_service/product.service';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -37,32 +38,44 @@ export class NavbarComponent implements OnInit {
   matcher = new MyErrorStateMatcher();
   isAdmin: boolean = false;
   userEmail: string = "";
-  countGoods: number = 0;
-  wishList: number = 0;
+  countGoods: any = 0;
+  wishList: any = 0;
   totalSum: number = 0;
+  over = "";
 
   constructor(private categoryService: CategoryService, 
     private readonly siteSettingService: SiteSettingsService, 
     private formBuilder: FormBuilder, 
     private authenticationService: AuthenticationService,
-    private userService: UserService) {
+    private userService: UserService,
+    private productService: ProductService) {
   }
 
   ngOnInit(): void {
     this.siteSettingService.siteSettings$.subscribe((settings) => this.siteSettings = settings);
     this.userService.cart$.subscribe((cart) => {
       this.countGoods = 0;
+      this.totalSum = 0;
       if(cart && cart.size > 0) {
         for (let entry of cart.entries()){
-          this.countGoods += entry[1];
+          if(this.countGoods < 999){
+            this.over = "";
+            this.countGoods += entry[1];
+          } else {
+            this.countGoods = 999;
+            this.over = "+";
+          }
+          this.productService.getProduct(entry[0]).subscribe({
+            next: (response) => {
+              this.totalSum += response.price*entry[1];
+            }
+          });
         }
       }
     });
     this.userService.wishList$.subscribe((wishList) => {
-      if(wishList && wishList.size > 0) {
-        for (let entry of wishList.entries()){
-          this.wishList += entry[1];
-        }
+      if(wishList && wishList.length > 0) {
+        this.wishList = wishList.length;
       }
     });
     this.authenticationService.currentUser.subscribe((user) => {
