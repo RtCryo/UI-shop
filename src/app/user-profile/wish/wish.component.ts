@@ -42,7 +42,7 @@ export class WishComponent implements OnInit {
   }
 
   deleteProduct(product: Product){
-    delete this.wishList[this.wishList.indexOf(product.id)];
+    this.wishList.splice(this.wishList.indexOf(product.id),1);
     this.userService.updateWishList(this.wishList);
   }
 

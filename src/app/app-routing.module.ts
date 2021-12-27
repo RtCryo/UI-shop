@@ -27,7 +27,7 @@ const adminRoutes: Routes = [
 
 const userRoutes: Routes = [
   { path: '', redirectTo: 'profile', pathMatch: 'full'},
-  { path: 'profile', component: ProfileComponent},
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
   { path: 'wish', component: WishComponent},
   { path: 'purchase', component: PurchaseComponent},
 ]
@@ -37,7 +37,7 @@ const routes: Routes = [
   { path: 'product/:id', component: ProductComponent},
   { path: 'product/**', redirectTo: '404'},
   { path: 'category', component: CategoryComponent},
-  { path: 'user', component: UserProfileComponent, children: userRoutes, canActivate: [AuthGuard]},
+  { path: 'user', component: UserProfileComponent, children: userRoutes},
   { path: '404', component: NotFoundComponent},
   { path: 'admin', component: AdminComponent, children: adminRoutes, canActivate: [AdminGuard]},
   { path: '**', redirectTo: 'home' },

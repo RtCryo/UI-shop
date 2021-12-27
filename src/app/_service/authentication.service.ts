@@ -10,19 +10,25 @@ import { User } from '../_model/user';
 })
 export class AuthenticationService {
 
-  private currentUserSubject: BehaviorSubject<User>;
-  public currentUser: Observable<User>;
+  private currentUserSubject!: BehaviorSubject<User>;
+  public currentUser!: Observable<User>;
 
   constructor(
       private router: Router,
       private http: HttpClient
   ) {
-    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')!));
-    this.currentUser = this.currentUserSubject.asObservable();
+    try{
+      this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')!));
+      this.currentUser = this.currentUserSubject.asObservable();
+    } catch (error: any){
+      localStorage.removeItem('currentUser');
+      this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')!));
+      this.currentUser = this.currentUserSubject.asObservable();
+    }
   }
 
   public get currentUserValue(): User {
-    return this.currentUserSubject.value;
+    return this.currentUserSubject?.value;
   }
 
   isAdmin(user: User) {

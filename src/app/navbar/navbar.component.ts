@@ -74,6 +74,7 @@ export class NavbarComponent implements OnInit {
       }
     });
     this.userService.wishList$.subscribe((wishList) => {
+      this.wishList = 0;
       if(wishList && wishList.length > 0) {
         this.wishList = wishList.length;
       }

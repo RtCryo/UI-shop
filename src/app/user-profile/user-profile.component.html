@@ -2,7 +2,7 @@
   <div class = "row">
       <div class = "col-2">
           <nav class="nav flex-column">
-              <a class="nav-link btn text-center" [ngClass]="status === 'profile' ? 'fs-4 fw-bold' : 'text-black'" style="color:black" routerLink="/user/profile">Profile</a>
+              <a class="nav-link btn text-center" [ngClass]="status === 'profile' ? 'fs-4 fw-bold' : 'text-black'" style="color:black" routerLink="/user/profile" *ngIf = "user">Profile</a>
               <a class="nav-link btn text-center" [ngClass]="status === 'wish' ? 'fs-4 fw-bold' : 'text-black'" style="color:black" routerLink="/user/wish">Wish list</a>
               <a class="nav-link btn text-center" [ngClass]="status === 'purchase' ? 'fs-4 fw-bold' : 'text-black'" style="color:black" routerLink="/user/purchase">Cart</a>
             </nav>
