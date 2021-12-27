@@ -13,4 +13,9 @@ export class ProductService {
   getProduct(id:number){
     return this.http.get<Product>(`${environment.hostUrl}/product/${id}`, {withCredentials: true})
   }
+
+  getAllProductsById(id: number[]){
+    return this.http.post<Product[]>(`${environment.hostUrl}/user/getAllProductsById`, id, {withCredentials: true})
+  }
+
 }

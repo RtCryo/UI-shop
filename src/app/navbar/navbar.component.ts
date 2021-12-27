@@ -60,7 +60,7 @@ export class NavbarComponent implements OnInit {
         for (let entry of cart.entries()){
           if(this.countGoods < 999){
             this.over = "";
-            this.countGoods += entry[1];
+            this.countGoods += +entry[1];
           } else {
             this.countGoods = 999;
             this.over = "+";

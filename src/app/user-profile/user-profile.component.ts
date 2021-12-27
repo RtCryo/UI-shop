@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
+import { ConnectableObservable } from 'rxjs';
 
 @Component({
   selector: 'app-user-profile',
@@ -8,11 +9,17 @@ import { Router } from '@angular/router';
 })
 export class UserProfileComponent implements OnInit {
 
-  status: string = "Profile"
+  status: string = "profile"
 
-  constructor(private router: Router) { }
+  constructor(private router: Router) {
+    
+  }
 
   ngOnInit(): void {
+    this.router.events.subscribe((event) => {
+      event instanceof NavigationEnd? this.status = event.url.substring(6): null
+    })
+    console.log(this.status);
   }
 
   selectMenu(menu: string){

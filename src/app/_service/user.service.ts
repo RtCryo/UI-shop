@@ -44,4 +44,8 @@ export class UserService {
     this.wishList$.next(wishList);
   }
 
+  getUserProfile(userEmail: string){
+    return this.http.post<User>(`${environment.hostUrl}/user/userProfileByEmail`, userEmail, {withCredentials: true})
+  }
+
 }

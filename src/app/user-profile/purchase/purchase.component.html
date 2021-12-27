@@ -1,1 +1,36 @@
-<p>purchase works!</p>
+<div class = "row">
+    <table class="table table-sm table-striped table-bordered align-middle table-hover" *ngIf = "productsCart">
+        <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Product</th>
+              <th scope="col">Price</th>
+              <th scope="col">Value</th>
+              <th scope="col">Total</th>
+              <th scope="col">Management</th>
+              <th scope="col">
+                <input class="form-check-input me-1" type="checkbox" value="" id="masterChkBox" (click) = "checkAllOptions()" [(ngModel)]="checked">
+              </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor = "let product of productsCart; let t = index">
+                <th scope="row">{{t + 1}}</th>
+                <td [routerLink]="['/product', product.id]" class = "fw-bold">{{product.productName}}</td>
+                <td>{{product.price | currency}}</td>
+                <td><input type="text" value={{cart.get(product.id)}} (change) = "changeValue($event, product)"></td>
+                <td>{{multipleProductSum(product.price, cart.get(product.id)) | currency}}</td>
+                <td class="">
+                    <div class="btn-group btn-group-sm ms-2">
+                      <button class="btn btn-danger" style="width: 4rem;" (click) = "deleteProduct(product)">Delete</button>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value={{product.id}} id="chkBox" (click) = "resetCheckAll()">
+                    </div>
+                  </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
