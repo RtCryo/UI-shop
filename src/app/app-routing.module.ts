@@ -7,6 +7,7 @@ import { SiteAdminComponent } from './admin/site-admin/site-admin.component';
 import { UsersAdminComponent } from './admin/users-admin/users-admin.component';
 import { CategoryComponent } from './category/category.component';
 import { HomeComponent } from './home/home.component';
+import { NavbarComponent } from './navbar/navbar.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ProductComponent } from './product/product.component';
 import { ProfileComponent } from './user-profile/profile/profile.component';
@@ -34,6 +35,7 @@ const userRoutes: Routes = [
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent},
+  { path: 'search/:searchTerm', component: HomeComponent},
   { path: 'product/:id', component: ProductComponent},
   { path: 'product/**', redirectTo: '404'},
   { path: 'category', component: CategoryComponent},

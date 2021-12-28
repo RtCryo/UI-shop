@@ -113,16 +113,15 @@
         <div class="col d-flex justify-content-center">
             <img src="/assets/img/{{siteSettings.imgLogoName}}" alt="" width="80" height="80">
         </div>
-        <form class="col-5 d-flex">
-            <input class="form-control" type="search" placeholder="Search" id="navBarSearchForm" aria-label="Search">
-            <button class="btn btn-outline-success mx-2" type="submit">Search</button>
-        </form>
-        <div class = "col d-flex justify-content-center fw-bold">Welcome to {{siteSettings.siteName}}</div>
-        <div class="col d-flex justify-content-end pe-5">
-            <div class = "col d-flex justify-content-end align-self-center fw-bold">{{userEmail}}</div>
 
+        <app-search class="col">
+        </app-search>
+        
+        <div class = "col d-flex justify-content-center fw-bold">Welcome to {{siteSettings.siteName}}</div>
+        <div class="col-1 d-flex justify-content-end pe-5">
             <div *ngIf="this.userEmail; then thenBlock else elseBlock"></div>
             <ng-template #thenBlock>
+              <div class = "col d-flex justify-content-end align-self-center fw-bold">{{userEmail}}</div>
               <div class="dropdown">
                 <div class="btn" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                   <img src="/assets/img/account.png" alt="" width="24" height="24">

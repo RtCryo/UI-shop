@@ -24,6 +24,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { ProfileComponent } from './user-profile/profile/profile.component';
 import { WishComponent } from './user-profile/wish/wish.component';
 import { PurchaseComponent } from './user-profile/purchase/purchase.component';
+import { SearchComponent } from './search/search.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { PurchaseComponent } from './user-profile/purchase/purchase.component';
     UserProfileComponent,
     ProfileComponent,
     WishComponent,
-    PurchaseComponent
+    PurchaseComponent,
+    SearchComponent
   ],
   imports: [
     MatInputModule,
