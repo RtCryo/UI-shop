@@ -48,7 +48,7 @@ export class WishComponent implements OnInit {
 
   getAllProductFromWish(wish: number[]){
     if (wish.length === 0) {
-      this.wishList = [];
+      this.wishProduct = [];
     } else {
       this.productService.getAllProductsById(wish).subscribe({
         next: (response) => {

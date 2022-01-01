@@ -19,7 +19,13 @@ export class ProductComponent implements OnInit {
 
   constructor(private activateRoute: ActivatedRoute, private productService: ProductService, private userService: UserService) {
     this.subscription = activateRoute.params.subscribe(
-      (params) => (this.showProduct(params['id']))
+      (params) => {
+        if(!isNaN(+params['id'])){
+          this.showProduct(params['id']);
+        } else {
+          location.replace('404');
+        }
+      }
     )
    }
 
