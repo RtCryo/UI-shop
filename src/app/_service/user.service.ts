@@ -48,7 +48,7 @@ export class UserService {
   }
 
   getUserProfile(userEmail: string){
-    return this.http.post<User>(`${environment.hostUrl}/user/userProfileByEmail`, userEmail, {withCredentials: true})
+    return this.http.post<User>(`${environment.hostUrl}/user/findUserProfileByEmail`, userEmail, {withCredentials: true})
   }
 
 }
