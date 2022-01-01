@@ -16,6 +16,9 @@ export class UserService {
   constructor(private http: HttpClient, private authenticationService: AuthenticationService) {
       this.cart$ = new BehaviorSubject<Map<number, number>>(this.jsonConvert('cart'));
       this.wishList$ = new BehaviorSubject<number[]>(JSON.parse(localStorage.getItem('wishList')!));
+      if(!this.wishList$) {
+        this.wishList$ = new BehaviorSubject<number[]>([]);
+      }
   }
 
   jsonConvert(item: string){

@@ -19,7 +19,7 @@ export class WishComponent implements OnInit {
   ngOnInit(): void {
     this.userService.wishList$.subscribe((wish) => {
       this.wishList = wish;
-      this.getAllProductFromWish();
+      this.getAllProductFromWish(wish);
     })
   }
 
@@ -46,12 +46,16 @@ export class WishComponent implements OnInit {
     this.userService.updateWishList(this.wishList);
   }
 
-  getAllProductFromWish(){
-    this.productService.getAllProductsById(this.wishList).subscribe({
-      next: (response) => {
-        this.wishProduct = response;
-      }
-    });
+  getAllProductFromWish(wish: number[]){
+    if (wish.length === 0) {
+      this.wishList = [];
+    } else {
+      this.productService.getAllProductsById(wish).subscribe({
+        next: (response) => {
+          this.wishProduct = response;
+        }
+      });
+    }
   }
 
 }
